@@ -25,7 +25,7 @@ This is a versatile frontend application starter, built with React, TypeScript, 
 
 1.  Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/evillan0315/vite-starter
     cd vite-starter
     ```
 2.  Install dependencies:
