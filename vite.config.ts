@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3001,
+    port: process.env.VITE_FRONTEND_PORT,
     proxy: {
       '/api': {
         target: process.env.VITE_API_URL,
@@ -38,16 +38,17 @@ export default defineConfig({
     ],
   },
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    'process.env.GITHUB_CALLBACK_URL': JSON.stringify(
+    'import.meta.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    'import.meta.env.GITHUB_CALLBACK_URL': JSON.stringify(
       process.env.GITHUB_CALLBACK_URL,
     ),
-    'process.env.GOOGLE_CALLBACK_URL': JSON.stringify(
+    'import.meta.env.GOOGLE_CALLBACK_URL': JSON.stringify(
       process.env.GOOGLE_CALLBACK_URL,
     ),
     'import.meta.env.VITE_BACKEND_URL': JSON.stringify(process.env.VITE_BACKEND_URL),
     'import.meta.env.VITE_FRONTEND_URL': JSON.stringify(process.env.VITE_FRONTEND_URL),
-    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL), // Fixed typo: ITE_API_URL -> VITE_API_URL
+    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
     'import.meta.env.VITE_WS_URL': JSON.stringify(process.env.VITE_WS_URL),
+    'import.meta.env.VITE_FRONTEND_PORT': JSON.stringify(process.env.VITE_FRONTEND_PORT),
   },
 });
