@@ -33,7 +33,7 @@ export const LoginPage: React.FC = () => {
     if (!email || !password) {
       return;
     }
-    const result = await login({ email, passwordHash: password }); // Backend expects passwordHash
+    const result = await login({ email, password: password }); // Changed passwordHash to password
     if (result.success) {
       // Handled by useAuth hook navigation
     }
