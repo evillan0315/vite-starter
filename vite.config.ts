@@ -47,7 +47,7 @@ export default defineConfig({
     ),
     'import.meta.env.VITE_BACKEND_URL': JSON.stringify(process.env.VITE_BACKEND_URL),
     'import.meta.env.VITE_FRONTEND_URL': JSON.stringify(process.env.VITE_FRONTEND_URL),
-    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.ITE_API_URL),
+    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL), // Fixed typo: ITE_API_URL -> VITE_API_URL
     'import.meta.env.VITE_WS_URL': JSON.stringify(process.env.VITE_WS_URL),
   },
 });
