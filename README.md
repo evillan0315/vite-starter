@@ -1,6 +1,6 @@
-# Gemini TTS Frontend Application
+# Vite Starter Frontend Application
 
-This is the frontend application for the Gemini Text-to-Speech (TTS) service, built with React, TypeScript, and Vite. It provides a user interface for authentication, managing user profiles, and interacting with the backend TTS and WebSocket services.
+This is a versatile frontend application starter, built with React, TypeScript, and Vite. It provides a foundational user interface for authentication, managing user profiles, and interacting with backend services.
 
 ## ✨ Features
 
@@ -11,7 +11,7 @@ This is the frontend application for the Gemini Text-to-Speech (TTS) service, bu
 -   **Nanostores:** Lightweight and efficient state management.
 -   **React Router DOM v6:** Declarative routing for navigation.
 -   **Authentication:** Secure user login via email/password, Google OAuth, and GitHub OAuth.
--   **Socket.IO Client:** Real-time communication with the backend WebSocket service.
+-   **Socket.IO Client:** Real-time communication with backend WebSocket services.
 
 ## 🚀 Getting Started
 
@@ -19,7 +19,7 @@ This is the frontend application for the Gemini Text-to-Speech (TTS) service, bu
 
 -   Node.js (LTS version recommended)
 -   npm, yarn, or pnpm package manager
--   A running backend API for authentication and TTS services.
+-   A running backend API for authentication and other services.
 
 ### Installation
 
@@ -64,7 +64,7 @@ GOOGLE_CALLBACK_URL="http://localhost:3000/api/auth/google/callback"
 NODE_ENV=development
 ```
 
-**Note:** The `VITE_FRONTEND_PORT` is used by Vite's development server, and `cli_port` parameter in OAuth redirects helps the backend know where to redirect after authentication.
+**Note:** The `VITE_FRONTEND_PORT` is used by Vite's development server, and is passed as a `cli_port` parameter in OAuth redirects.
 
 ### Development
 
