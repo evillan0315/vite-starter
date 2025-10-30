@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
           to="/"
           sx={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}
         >
-          Gemini TTS App
+          Vite Starter App
         </Typography>
 
         <Box className="flex items-center gap-4">

@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import { useAuth } from '@/components/auth/hooks/useAuth'; // Adjusted import path
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'; // Changed icon
+import { useAuth } from '@/components/auth/hooks/useAuth';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ export const LoginPage: React.FC = () => {
     if (!email || !password) {
       return;
     }
-    const result = await login({ email, password: password }); // Changed passwordHash to password
+    const result = await login({ email, password: password });
     if (result.success) {
       // Handled by useAuth hook navigation
     }
@@ -63,9 +63,9 @@ export const LoginPage: React.FC = () => {
         spacing={1}
         sx={{ mb: 4, color: 'primary.main' }}
       >
-        <RecordVoiceOverIcon sx={{ fontSize: 60 }} />
+        <RocketLaunchIcon sx={{ fontSize: 60 }} />
         <Typography variant="h3" component="div" className="font-extrabold">
-          Gemini TTS
+          Vite Starter
         </Typography>
       </Stack>
 

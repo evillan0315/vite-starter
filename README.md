@@ -114,3 +114,9 @@ The application uses a JWT-based authentication system:
 ## 🎨 Styling
 
 This project combines Material UI for rich components and Tailwind CSS for utility-first styling. Material UI components are customized using the `theme.ts` file and the `sx` prop, while Tailwind classes are applied directly in JSX for layout and responsive design.
+
+## 📧 Contact
+
+Eddie Villanueva - [evillan0315@gmail.com](mailto:evillan0315@gmail.com)  
+[LinkedIn](https://www.linkedin.com/in/eddie-villalon/)  
+[GitHub](https://github.com/evillan0315)

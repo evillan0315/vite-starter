@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { authStore, fetchUserProfile, logoutUser } from '@components/auth/stores/authStore'; // Adjusted import path
+import { authStore, fetchUserProfile, logoutUser } from '@/components/auth/stores/authStore'; // Adjusted import path
 import { Box, Typography, CircularProgress, Alert } from '@mui/material';
 export const AuthCallback: React.FC = () => {
   const [searchParams] = useSearchParams();

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodejs-websocket-server
+  labels:
+    app: websocket-server
+spec:
+  containers:
+  - name: nodejs-websocket-container
+    image: my-websocket-app:1.0.0 # Replace with your actual Docker image for the WebSocket server.
+    ports:
+    - containerPort: 3000 # Default WebSocket server port, adjust if your app uses a different one.
+      name: ws-port
+    workingDir: /app # Assuming your Node.js application code is in /app inside the container.
+    command: ["npm", "start"] # This command assumes 'npm start' runs your WebSocket server.
+    volumeMounts:
+    - name: app-data-volume
+      mountPath: /app/data # This is the path INSIDE the container where the host data will be mounted.
+  volumes:
+  - name: app-data-volume
+    hostPath:
+      path: /media/eddie/Data/projects/nestJS/nest-modules/project-board-server/apps/vite-starter/kubernetes/data # The specific host path requested by the user.
+      type: DirectoryOrCreate # Ensures the directory exists on the host. Create it manually if your Kubernetes setup doesn't support automatic creation or if you want more control.
