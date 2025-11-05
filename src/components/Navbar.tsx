@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" color="primary" elevation={1} sx={{ bgcolor: 'primary.dark' }}>
+    <AppBar position="static" color="primary" elevation={1} sx={{ bgcolor: 'primary.dark', borderRadius: 0, p:0 }}>
       <Toolbar className="justify-between">
         <Typography
           variant="h6"
@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
           to="/"
           sx={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}
         >
-          Vite Starter App
+          Codejector Starter App
         </Typography>
 
         <Box className="flex items-center gap-4">
