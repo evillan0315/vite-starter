@@ -1,43 +1,59 @@
-import { useCallback, useEffect, useState, type FormEvent } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import type { JSX } from "react";
 import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
+
+import {
+  Alert,
   Box,
   Button,
+  CircularProgress,
+  Divider,
+  IconButton,
+  InputAdornment,
+  Link,
+  Paper,
+  Stack,
   TextField,
   Typography,
-  CircularProgress,
-  Alert,
-  Paper,
-  Link,
-  Stack,
 } from "@mui/material";
 
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import RocketLaunchOutlinedIcon from "@mui/icons-material/RocketLaunchOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { paths } from "@/app/router/path";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const oauthRedirect = (provider: "google" | "github") => {
+const oauthRedirect = (
+  provider: "google" | "github",
+): void => {
   window.location.href = `${API_URL}/auth/${provider}`;
 };
 
-const textFieldSx = {
-  mb: 2,
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": { borderColor: "primary.light" },
-    "&:hover fieldset": { borderColor: "primary.main" },
-    "&.Mui-focused fieldset": { borderColor: "primary.dark" },
-  },
-  "& .MuiInputLabel-root": { color: "text.secondary" },
-  "& .MuiInputBase-input": { color: "text.primary" },
-};
-const Login = () => {
+export default function Login(): JSX.Element {
   const navigate = useNavigate();
 
-  const { login, loading, error, isLoggedIn } = useAuth();
+  const {
+    login,
+    loading,
+    error,
+    isLoggedIn,
+  } = useAuth();
+
+  const [showPassword, setShowPassword] =
+    useState(false);
 
   const [form, setForm] = useState({
     email: "",
@@ -46,153 +62,202 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/dashboard", { replace: true });
+      navigate(paths.dashboard.root, {
+        replace: true,
+      });
     }
   }, [isLoggedIn, navigate]);
 
+  const canSubmit = useMemo(
+    () =>
+      form.email.trim().length > 0 &&
+      form.password.length > 0 &&
+      !loading,
+    [form, loading],
+  );
+
   const handleChange =
-    (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setForm((prev) => ({
-        ...prev,
-        [key]: e.target.value,
+    (field: keyof typeof form) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setForm((previous) => ({
+        ...previous,
+        [field]: event.target.value,
       }));
     };
 
   const handleSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-      if (!form.email || !form.password) return;
+      if (!canSubmit) return;
 
       await login({
-        email: form.email,
+        email: form.email.trim(),
         password: form.password,
       });
     },
-    [form, login],
+    [canSubmit, form, login],
   );
 
-  const handleGoogleLogin = useCallback(() => {
-    oauthRedirect("google");
-  }, []);
-
-  const handleGitHubLogin = useCallback(() => {
-    oauthRedirect("github");
-  }, []);
-
   return (
-    <Box className="flex flex-col items-center justify-center p-6 max-w-md mx-auto min-h-[calc(100vh-128px)]">
-      {/* Header */}
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        sx={{ mb: 4, color: "primary.main" }}
-      >
-        <RocketLaunchIcon sx={{ fontSize: 60 }} />
-        <Typography variant="h3" className="font-extrabold">
-          Vite Starter
-        </Typography>
-      </Stack>
-
-      {/* Login Card */}
+    <Box className="flex min-h-screen items-center justify-center px-6 py-12">
       <Paper
-        sx={{
-          p: 4,
-          mb: 3,
-          borderRadius: 2,
-          boxShadow: 3,
-          bgcolor: "background.paper",
-        }}
+        elevation={6}
+        className="w-full max-w-md rounded-3xl p-8"
       >
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
+        <Stack spacing={4}>
+          {/* Header */}
 
-        {/* Form */}
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            type="email"
-            value={form.email}
-            onChange={handleChange("email")}
-            fullWidth
-            required
-            disabled={loading}
-            sx={textFieldSx}
-          />
-
-          <TextField
-            label="Password"
-            type="password"
-            value={form.password}
-            onChange={handleChange("password")}
-            fullWidth
-            required
-            disabled={loading}
-            sx={textFieldSx}
-          />
-
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            disabled={loading}
-            startIcon={
-              loading ? <CircularProgress size={20} color="inherit" /> : null
-            }
-            className="py-3 text-lg font-bold"
-            sx={{ mt: 2, mb: 3 }}
+          <Stack
+            spacing={2}
+            alignItems="center"
           >
-            Login
-          </Button>
-        </form>
+            <RocketLaunchOutlinedIcon
+              color="primary"
+              sx={{ fontSize: 60 }}
+            />
 
-        {/* OAuth */}
-        <Box className="flex flex-col gap-2">
-          <Button
-            variant="outlined"
-            fullWidth
-            startIcon={<GoogleIcon />}
-            onClick={handleGoogleLogin}
-            disabled={loading}
-          >
-            Continue with Google
-          </Button>
+            <Typography
+              variant="h4"
+              fontWeight={700}
+            >
+              Welcome Back
+            </Typography>
 
-          <Button
-            variant="outlined"
-            fullWidth
-            startIcon={<GitHubIcon />}
-            onClick={handleGitHubLogin}
-            disabled={loading}
-          >
-            Continue with GitHub
-          </Button>
-        </Box>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="center"
+            >
+              Sign in to continue to your
+              application.
+            </Typography>
+          </Stack>
 
-        {/* Register */}
-        <Typography
-          variant="body2"
-          sx={{ mt: 3, textAlign: "center", color: "text.secondary" }}
-        >
-          Don’t have an account?{" "}
-          <Link
-            component={RouterLink}
-            to="/register"
-            sx={{
-              textDecoration: "none",
-              color: "primary.main",
-              "&:hover": { textDecoration: "underline" },
-            }}
+          {error && (
+            <Alert severity="error">
+              {error}
+            </Alert>
+          )}
+
+          {/* Login Form */}
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
           >
-            Register
-          </Link>
-        </Typography>
+            <Stack spacing={3}>
+              <TextField
+                label="Email Address"
+                type="email"
+                autoComplete="email"
+                value={form.email}
+                onChange={handleChange("email")}
+                disabled={loading}
+                fullWidth
+              />
+
+              <TextField
+                label="Password"
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
+                autoComplete="current-password"
+                value={form.password}
+                onChange={handleChange(
+                  "password",
+                )}
+                disabled={loading}
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={() =>
+                          setShowPassword(
+                            (value) => !value,
+                          )
+                        }
+                      >
+                        {showPassword ? (
+                          <VisibilityOffOutlinedIcon />
+                        ) : (
+                          <VisibilityOutlinedIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                disabled={!canSubmit}
+                startIcon={
+                  loading ? (
+                    <CircularProgress
+                      size={18}
+                      color="inherit"
+                    />
+                  ) : undefined
+                }
+              >
+                {loading
+                  ? "Signing In..."
+                  : "Sign In"}
+              </Button>
+            </Stack>
+          </Box>
+
+          <Divider>OR</Divider>
+
+          {/* OAuth */}
+
+          <Stack spacing={2}>
+            <Button
+              variant="outlined"
+              startIcon={<GoogleIcon />}
+              disabled={loading}
+              onClick={() =>
+                oauthRedirect("google")
+              }
+            >
+              Continue with Google
+            </Button>
+
+            <Button
+              variant="outlined"
+              startIcon={<GitHubIcon />}
+              disabled={loading}
+              onClick={() =>
+                oauthRedirect("github")
+              }
+            >
+              Continue with GitHub
+            </Button>
+          </Stack>
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            textAlign="center"
+          >
+            Don't have an account?{" "}
+            <Link
+              component={RouterLink}
+              to="/register"
+              underline="hover"
+            >
+              Create one
+            </Link>
+          </Typography>
+        </Stack>
       </Paper>
     </Box>
   );
-};
-export default Login;
+}

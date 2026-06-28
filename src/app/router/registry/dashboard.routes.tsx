@@ -1,6 +1,9 @@
 import { lazy } from "react";
 import type { RouteObject } from "react-router-dom";
 
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+
 import { DashboardLayout } from "../layouts";
 import { paths } from "../path";
 import type { RouteHandle } from "../route-handle";
@@ -29,6 +32,7 @@ export const dashboardRoutes: RouteObject = {
         title: "Dashboard",
         label: "Dashboard",
         breadcrumb: "Dashboard",
+        icon: <DashboardOutlinedIcon />,
         requiresAuth: true,
         showInSidebar: true,
         showInNavbar: false,
@@ -43,9 +47,10 @@ export const dashboardRoutes: RouteObject = {
         title: "Profile",
         label: "Profile",
         breadcrumb: "Profile",
+        icon: <PersonOutlineOutlinedIcon />,
         requiresAuth: true,
         showInSidebar: true,
-        showInNavbar: false,
+        showInNavbar: true,
         order: 2,
       } satisfies RouteHandle,
     },
