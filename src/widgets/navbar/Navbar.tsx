@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import {
   AppBar,
@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@mui/material";
 
@@ -23,6 +24,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { paths } from "@/app/router/path";
+import ThemeToggle from "@/shared/ui/ThemeToggle";
 
 export function Navbar(): JSX.Element {
   const navigate = useNavigate();
@@ -33,7 +35,9 @@ export function Navbar(): JSX.Element {
 
   const open = Boolean(anchorEl);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleMenuOpen = (
+    event: React.MouseEvent<HTMLElement>,
+  ): void => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -52,7 +56,9 @@ export function Navbar(): JSX.Element {
 
   const handleProfile = (): void => {
     handleMenuClose();
-    navigate(`${paths.dashboard.root}/${paths.dashboard.profile}`);
+    navigate(
+      `${paths.dashboard.root}/${paths.dashboard.profile}`,
+    );
   };
 
   const handleLogout = async (): Promise<void> => {
@@ -66,56 +72,141 @@ export function Navbar(): JSX.Element {
   };
 
   return (
-    <AppBar position="sticky" elevation={1} color="inherit">
-      <Toolbar className="flex justify-between">
-        <Box className="flex items-center gap-2">
-          <IconButton edge="start">
-            <MenuIcon />
-          </IconButton>
+    <AppBar
+      position="sticky"
+      elevation={0}
+      color="inherit"
+      sx={{
+        borderBottom: 1,
+        borderColor: "divider",
+        backdropFilter: "blur(18px)",
+      }}
+    >
+      <Toolbar
+        sx={{
+          justifyContent: "space-between",
+          minHeight: 56,
+        }}
+      >
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={1}
+        >
+          <Tooltip title="Menu">
+            <IconButton edge="start">
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
 
-          <Typography variant="h6" className="font-semibold">
+          <Typography
+            component={RouterLink}
+            to="/"
+            variant="h6"
+            sx={{
+              textDecoration: "none",
+              color: "inherit",
+              fontWeight: 700,
+              letterSpacing: 0.5,
+            }}
+          >
             Vite Starter
           </Typography>
         </Box>
 
-        {!isLoggedIn ? (
-          <Button
-            variant="contained"
-            startIcon={<LoginIcon />}
-            onClick={handleLogin}
-          >
-            Login
-          </Button>
-        ) : (
-          <Box className="flex items-center gap-3">
-            <Typography variant="body2" color="text.secondary">
-              {user?.firstName ?? user?.email ?? "Authenticated User"}
-            </Typography>
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={1}
+        >
+          <ThemeToggle />
 
-            <IconButton onClick={handleMenuOpen}>
-              <Avatar>
-                <AccountCircleIcon />
-              </Avatar>
-            </IconButton>
+          {!isLoggedIn ? (
+            <Button
+              variant="contained"
+              startIcon={<LoginIcon />}
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+          ) : (
+            <>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  display: {
+                    xs: "none",
+                    md: "block",
+                  },
+                }}
+              >
+                {user?.firstName ??
+                  user?.email ??
+                  "Authenticated User"}
+              </Typography>
 
-            <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
-              <MenuItem onClick={handleDashboard}>
-                <DashboardIcon fontSize="small" className="mr-2" />
-                Dashboard
-              </MenuItem>
+              <Tooltip title="Account">
+                <IconButton
+                  onClick={handleMenuOpen}
+                  aria-controls={
+                    open ? "account-menu" : undefined
+                  }
+                  aria-haspopup="true"
+                  aria-expanded={open}
+                >
+                  <Avatar
+                    sx={{
+                      width: 36,
+                      height: 36,
+                    }}
+                  >
+                    <AccountCircleIcon />
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
 
-              <MenuItem onClick={handleProfile}>
-                <PersonIcon fontSize="small" className="mr-2" />
-                Profile
-              </MenuItem>
+              <Menu
+                id="account-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleMenuClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                <MenuItem onClick={handleDashboard}>
+                  <DashboardIcon
+                    fontSize="small"
+                    sx={{ mr: 1 }}
+                  />
+                  Dashboard
+                </MenuItem>
 
-              <MenuItem onClick={handleLogout}>
-                <LogoutIcon fontSize="small" className="mr-2" />
-                Logout
-              </MenuItem>
-            </Menu>
-          </Box>
-        )}
+                <MenuItem onClick={handleProfile}>
+                  <PersonIcon
+                    fontSize="small"
+                    sx={{ mr: 1 }}
+                  />
+                  Profile
+                </MenuItem>
+
+                <MenuItem onClick={handleLogout}>
+                  <LogoutIcon
+                    fontSize="small"
+                    sx={{ mr: 1 }}
+                  />
+                  Logout
+                </MenuItem>
+              </Menu>
+            </>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );
