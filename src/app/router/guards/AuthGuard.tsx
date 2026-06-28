@@ -1,7 +1,14 @@
-import { JSX } from "react";
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
-export function AuthGuard({ children }: { children: JSX.Element }) {
-  const isAuth = true;
-  return isAuth ? children : <Navigate to="/login" replace />;
-}
+export const AuthGuard = () => {
+  const { isLoggedIn, loading } = useAuth();
+
+  if (loading) return null; // or a loader
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
+};

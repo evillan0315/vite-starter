@@ -1,5 +1,13 @@
-import { ReactNode } from 'react';
+import React from "react";
+import { LoadingPortal } from "@/shared/ui/loading/LoadingPortal";
 
-export function AppProviders({ children }: { children: ReactNode }) {
-  return children;
-}
+export const AppProviders: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  return (
+    <>
+      {children}
+      <LoadingPortal />
+    </>
+  );
+};

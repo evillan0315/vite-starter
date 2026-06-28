@@ -21,13 +21,12 @@ interface LoadingProps {
   message?: string;
   className?: string;
 
-  // Common props
+  fullscreen?: boolean; // ✅ ADD THIS
+
   size?: number;
 
-  // Linear
   barHeight?: number;
 
-  // Skeleton
   skeletonWidth?: number | string;
   skeletonHeight?: number | string;
   skeletonVariant?: "text" | "rectangular" | "rounded" | "circular";

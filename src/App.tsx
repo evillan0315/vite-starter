@@ -1,10 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Box, Typography, CircularProgress } from "@mui/material";
-import { Navbar } from "@/components/Navbar";
-import { LoginPage } from "@/components/auth/LoginPage";
-import { AuthCallback } from "@/components/auth/AuthCallback";
-import { useAuth } from "@/components/auth/hooks/useAuth";
+import { Navbar } from "@/widgets/navbar/Navbar";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import  Login from "@/features/auth/pages/Login";
+import  AuthCallback  from "@/features/auth/pages/AuthCallback";
+
 const HomePage: React.FC = () => {
   const { user } = useAuth();
   return (
@@ -52,10 +53,10 @@ const App: React.FC = () => {
     <Box className="bg-background-default min-h-screen">
       <Navbar />
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         {/* Protected Route Example */}
-        <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
+        <Route path="/" element={isLoggedIn ? <HomePage /> : <Login />} />
         {/* Add more routes here, perhaps a /dashboard that requires login */}
         {/* Example of a truly protected route that redirects if not logged in */}
         {/* <Route

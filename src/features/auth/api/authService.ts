@@ -1,10 +1,10 @@
 import axios from "axios";
-import { getAuthToken } from "@/components/auth/stores/authStore";
+import { getAuthToken } from "@/features/auth/model/authStore";
 import type {
   LoginCredentials,
   UserProfile,
   AuthResponse,
-} from "@/components/auth/types/auth";
+} from "@/features/auth/types/auth";
 
 const API_BASE_URL = "/api";
 
