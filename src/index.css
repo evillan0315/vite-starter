@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 /* Basic global styles, removed conflicting ones for MUI */
 :root {
   /* Removed explicit color/background-color to let MUI/Tailwind handle them */

@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 
 import { Navbar } from "@/widgets/navbar/Navbar";
 
-
 export default function RootLayout(): JSX.Element {
   return (
     <div className="flex min-h-dvh flex-col bg-background-default text-text-primary">

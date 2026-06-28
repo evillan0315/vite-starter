@@ -27,19 +27,13 @@ import { paths } from "@/app/router/path";
 export function Navbar(): JSX.Element {
   const navigate = useNavigate();
 
-  const {
-    user,
-    isLoggedIn,
-    logout,
-  } = useAuth();
+  const { user, isLoggedIn, logout } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
 
-  const handleMenuOpen = (
-    event: React.MouseEvent<HTMLElement>,
-  ): void => {
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -58,9 +52,7 @@ export function Navbar(): JSX.Element {
 
   const handleProfile = (): void => {
     handleMenuClose();
-    navigate(
-      `${paths.dashboard.root}/${paths.dashboard.profile}`,
-    );
+    navigate(`${paths.dashboard.root}/${paths.dashboard.profile}`);
   };
 
   const handleLogout = async (): Promise<void> => {
@@ -74,21 +66,14 @@ export function Navbar(): JSX.Element {
   };
 
   return (
-    <AppBar
-      position="sticky"
-      elevation={1}
-      color="inherit"
-    >
+    <AppBar position="sticky" elevation={1} color="inherit">
       <Toolbar className="flex justify-between">
         <Box className="flex items-center gap-2">
           <IconButton edge="start">
             <MenuIcon />
           </IconButton>
 
-          <Typography
-            variant="h6"
-            className="font-semibold"
-          >
+          <Typography variant="h6" className="font-semibold">
             Vite Starter
           </Typography>
         </Box>
@@ -103,13 +88,8 @@ export function Navbar(): JSX.Element {
           </Button>
         ) : (
           <Box className="flex items-center gap-3">
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
-              {user?.firstName ??
-                user?.email ??
-                "Authenticated User"}
+            <Typography variant="body2" color="text.secondary">
+              {user?.firstName ?? user?.email ?? "Authenticated User"}
             </Typography>
 
             <IconButton onClick={handleMenuOpen}>
@@ -118,32 +98,19 @@ export function Navbar(): JSX.Element {
               </Avatar>
             </IconButton>
 
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleMenuClose}
-            >
+            <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
               <MenuItem onClick={handleDashboard}>
-                <DashboardIcon
-                  fontSize="small"
-                  className="mr-2"
-                />
+                <DashboardIcon fontSize="small" className="mr-2" />
                 Dashboard
               </MenuItem>
 
               <MenuItem onClick={handleProfile}>
-                <PersonIcon
-                  fontSize="small"
-                  className="mr-2"
-                />
+                <PersonIcon fontSize="small" className="mr-2" />
                 Profile
               </MenuItem>
 
               <MenuItem onClick={handleLogout}>
-                <LogoutIcon
-                  fontSize="small"
-                  className="mr-2"
-                />
+                <LogoutIcon fontSize="small" className="mr-2" />
                 Logout
               </MenuItem>
             </Menu>

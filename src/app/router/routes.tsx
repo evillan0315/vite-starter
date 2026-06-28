@@ -8,11 +8,7 @@ import RootLayout from "./layouts/RootLayout";
 import { ErrorPage, NotFound } from "./pages";
 import { paths } from "./path";
 
-import {
-  authRoutes,
-  dashboardRoutes,
-  publicRoutes,
-} from "./registry";
+import { authRoutes, dashboardRoutes, publicRoutes } from "./registry";
 
 export const routes: RouteObject[] = [
   {

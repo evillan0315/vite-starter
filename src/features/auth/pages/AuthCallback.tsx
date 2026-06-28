@@ -1,81 +1,123 @@
-import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Box, Typography, CircularProgress, Alert } from "@mui/material";
+import type { JSX } from "react";
+import { useEffect, useState } from "react";
 
+import { Alert, Box, Button, Paper, Stack, Typography } from "@mui/material";
+
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+import { paths } from "@/app/router/path";
 import {
+  authStore,
   fetchUserProfile,
   logoutUser,
-  authStore,
 } from "@/features/auth/model/authStore";
+import Loading from "@/shared/ui/Loading";
 
-const AuthCallback = () => {
-  const [searchParams] = useSearchParams();
+export default function AuthCallback(): JSX.Element {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const error = searchParams.get("error");
-  const token = searchParams.get("accessToken");
+  const [callbackError, setCallbackError] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleCallback = async () => {
+    let mounted = true;
+
+    const authenticate = async (): Promise<void> => {
+      const error = searchParams.get("error");
+      const accessToken = searchParams.get("accessToken");
+
       try {
         if (error) {
-          navigate(`/login?error=${encodeURIComponent(error)}`, {
+          navigate(
+            `${paths.auth.root}/${paths.auth.login}?error=${encodeURIComponent(
+              error,
+            )}`,
+            {
+              replace: true,
+            },
+          );
+
+          return;
+        }
+
+        if (!accessToken) {
+          navigate(`${paths.auth.root}/${paths.auth.login}`, {
             replace: true,
           });
+
           return;
         }
 
-        if (!token) {
-          navigate("/login", { replace: true });
-          return;
-        }
-
-        // 1. Set token-only auth state
         authStore.set({
           isLoggedIn: true,
-          token,
+          token: accessToken,
           user: null,
           loading: true,
           error: null,
         });
 
-        // 2. Fetch user profile via store action
         await fetchUserProfile();
 
-        // 3. Final navigation
-        navigate("/dashboard", { replace: true });
+        navigate(paths.dashboard.root, {
+          replace: true,
+        });
       } catch (err) {
         await logoutUser();
 
-        navigate(
-          `/login?error=${encodeURIComponent(
-            (err as Error).message || "Authentication failed"
-          )}`,
-          { replace: true }
-        );
+        if (!mounted) return;
+
+        const message =
+          err instanceof Error ? err.message : "Authentication failed.";
+
+        setCallbackError(message);
       }
     };
 
-    handleCallback();
-  }, [token, error, navigate]);
+    void authenticate();
 
-  const state = authStore.get();
+    return () => {
+      mounted = false;
+    };
+  }, [navigate, searchParams]);
+
+  if (!callbackError) {
+    return (
+      <Loading
+        type="gradient"
+        fullscreen
+        message="Completing authentication..."
+      />
+    );
+  }
 
   return (
-    <Box className="flex flex-col items-center justify-center min-h-[50vh]">
-      {state.error ? (
-        <Alert severity="error">
-          Authentication failed: {state.error}
-        </Alert>
-      ) : (
-        <>
-          <CircularProgress />
-          <Typography className="mt-2 text-gray-500">
-            Completing authentication...
+    <Box className="flex min-h-screen items-center justify-center px-6">
+      <Paper elevation={4} className="w-full max-w-md rounded-2xl p-8">
+        <Stack spacing={3} alignItems="center">
+          <Alert severity="error" sx={{ width: "100%" }}>
+            {callbackError}
+          </Alert>
+
+          <Typography variant="body2" color="text.secondary" textAlign="center">
+            Your authentication could not be completed. Please try signing in
+            again.
           </Typography>
-        </>
-      )}
+
+          <Button
+            variant="contained"
+            startIcon={<HomeOutlinedIcon />}
+            onClick={() =>
+              navigate(`${paths.auth.root}/${paths.auth.login}`, {
+                replace: true,
+              })
+            }
+          >
+            Back to Login
+          </Button>
+        </Stack>
+      </Paper>
     </Box>
   );
-};
-export default AuthCallback;
+}

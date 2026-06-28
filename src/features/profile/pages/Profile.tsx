@@ -43,16 +43,11 @@ const Profile: React.FC = () => {
             </Avatar>
 
             <Stack spacing={1}>
-              <Typography
-                variant="h4"
-                fontWeight={700}
-              >
+              <Typography variant="h4" fontWeight={700}>
                 {user?.firstName ?? "User"}
               </Typography>
 
-              <Typography color="text.secondary">
-                {user?.email}
-              </Typography>
+              <Typography color="text.secondary">{user?.email}</Typography>
             </Stack>
           </Stack>
         </CardContent>
@@ -60,10 +55,7 @@ const Profile: React.FC = () => {
 
       <Card>
         <CardContent>
-          <Typography
-            variant="h6"
-            gutterBottom
-          >
+          <Typography variant="h6" gutterBottom>
             Account Information
           </Typography>
 
@@ -78,10 +70,7 @@ const Profile: React.FC = () => {
             </ListItem>
 
             <ListItem>
-              <ListItemText
-                primary="Email"
-                secondary={user?.email ?? "-"}
-              />
+              <ListItemText primary="Email" secondary={user?.email ?? "-"} />
             </ListItem>
 
             <ListItem>

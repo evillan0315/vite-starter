@@ -39,64 +39,32 @@ const Dashboard: React.FC = () => {
           Dashboard
         </Typography>
 
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          mt={1}
-        >
+        <Typography variant="body1" color="text.secondary" mt={1}>
           Welcome back{" "}
           <strong>{user?.firstName ?? user?.email ?? "User"}</strong>.
         </Typography>
 
-        <Stack
-          direction="row"
-          spacing={1}
-          mt={2}
-        >
-          <Chip
-            label="Authenticated"
-            color="success"
-          />
+        <Stack direction="row" spacing={1} mt={2}>
+          <Chip label="Authenticated" color="success" />
 
-          <Chip
-            label="React 18"
-            variant="outlined"
-          />
+          <Chip label="React 18" variant="outlined" />
 
-          <Chip
-            label="Material UI"
-            variant="outlined"
-          />
+          <Chip label="Material UI" variant="outlined" />
 
-          <Chip
-            label="Tailwind CSS"
-            variant="outlined"
-          />
+          <Chip label="Tailwind CSS" variant="outlined" />
         </Stack>
       </Paper>
 
-      <Grid
-        container
-        spacing={3}
-      >
+      <Grid container spacing={3}>
         {stats.map((item) => (
-          <Grid
-            key={item.title}
-            size={{ xs: 12, sm: 6, md: 3 }}
-          >
+          <Grid key={item.title} size={{ xs: 12, sm: 6, md: 3 }}>
             <Card className="h-full">
               <CardContent>
-                <Typography
-                  color="text.secondary"
-                  gutterBottom
-                >
+                <Typography color="text.secondary" gutterBottom>
                   {item.title}
                 </Typography>
 
-                <Typography
-                  variant="h3"
-                  fontWeight={700}
-                >
+                <Typography variant="h3" fontWeight={700}>
                   {item.value}
                 </Typography>
               </CardContent>
@@ -107,10 +75,7 @@ const Dashboard: React.FC = () => {
 
       <Card>
         <CardContent>
-          <Typography
-            variant="h6"
-            gutterBottom
-          >
+          <Typography variant="h6" gutterBottom>
             Recent Activity
           </Typography>
 
@@ -121,9 +86,7 @@ const Dashboard: React.FC = () => {
               • Authentication initialized successfully.
             </Typography>
 
-            <Typography color="text.secondary">
-              • Dashboard loaded.
-            </Typography>
+            <Typography color="text.secondary">• Dashboard loaded.</Typography>
 
             <Typography color="text.secondary">
               • Ready for feature modules.

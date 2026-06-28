@@ -2,9 +2,7 @@ import type { PropsWithChildren, JSX } from "react";
 
 import { LoadingPortal } from "@/shared/ui/loading/LoadingPortal";
 
-export function AppProviders({
-  children,
-}: PropsWithChildren): JSX.Element {
+export function AppProviders({ children }: PropsWithChildren): JSX.Element {
   return (
     <>
       {children}

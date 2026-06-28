@@ -36,24 +36,16 @@ import { paths } from "@/app/router/path";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const oauthRedirect = (
-  provider: "google" | "github",
-): void => {
+const oauthRedirect = (provider: "google" | "github"): void => {
   window.location.href = `${API_URL}/auth/${provider}`;
 };
 
 export default function Login(): JSX.Element {
   const navigate = useNavigate();
 
-  const {
-    login,
-    loading,
-    error,
-    isLoggedIn,
-  } = useAuth();
+  const { login, loading, error, isLoggedIn } = useAuth();
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
     email: "",
@@ -69,16 +61,12 @@ export default function Login(): JSX.Element {
   }, [isLoggedIn, navigate]);
 
   const canSubmit = useMemo(
-    () =>
-      form.email.trim().length > 0 &&
-      form.password.length > 0 &&
-      !loading,
+    () => form.email.trim().length > 0 && form.password.length > 0 && !loading,
     [form, loading],
   );
 
   const handleChange =
-    (field: keyof typeof form) =>
-    (event: ChangeEvent<HTMLInputElement>) => {
+    (field: keyof typeof form) => (event: ChangeEvent<HTMLInputElement>) => {
       setForm((previous) => ({
         ...previous,
         [field]: event.target.value,
@@ -101,26 +89,14 @@ export default function Login(): JSX.Element {
 
   return (
     <Box className="flex min-h-screen items-center justify-center px-6 py-12">
-      <Paper
-        elevation={6}
-        className="w-full max-w-md rounded-3xl p-8"
-      >
+      <Paper elevation={6} className="w-full max-w-md rounded-3xl p-8">
         <Stack spacing={4}>
           {/* Header */}
 
-          <Stack
-            spacing={2}
-            alignItems="center"
-          >
-            <RocketLaunchOutlinedIcon
-              color="primary"
-              sx={{ fontSize: 60 }}
-            />
+          <Stack spacing={2} alignItems="center">
+            <RocketLaunchOutlinedIcon color="primary" sx={{ fontSize: 60 }} />
 
-            <Typography
-              variant="h4"
-              fontWeight={700}
-            >
+            <Typography variant="h4" fontWeight={700}>
               Welcome Back
             </Typography>
 
@@ -129,23 +105,15 @@ export default function Login(): JSX.Element {
               color="text.secondary"
               textAlign="center"
             >
-              Sign in to continue to your
-              application.
+              Sign in to continue to your application.
             </Typography>
           </Stack>
 
-          {error && (
-            <Alert severity="error">
-              {error}
-            </Alert>
-          )}
+          {error && <Alert severity="error">{error}</Alert>}
 
           {/* Login Form */}
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-          >
+          <Box component="form" onSubmit={handleSubmit}>
             <Stack spacing={3}>
               <TextField
                 label="Email Address"
@@ -159,16 +127,10 @@ export default function Login(): JSX.Element {
 
               <TextField
                 label="Password"
-                type={
-                  showPassword
-                    ? "text"
-                    : "password"
-                }
+                type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 value={form.password}
-                onChange={handleChange(
-                  "password",
-                )}
+                onChange={handleChange("password")}
                 disabled={loading}
                 fullWidth
                 InputProps={{
@@ -176,11 +138,7 @@ export default function Login(): JSX.Element {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={() =>
-                          setShowPassword(
-                            (value) => !value,
-                          )
-                        }
+                        onClick={() => setShowPassword((value) => !value)}
                       >
                         {showPassword ? (
                           <VisibilityOffOutlinedIcon />
@@ -200,16 +158,11 @@ export default function Login(): JSX.Element {
                 disabled={!canSubmit}
                 startIcon={
                   loading ? (
-                    <CircularProgress
-                      size={18}
-                      color="inherit"
-                    />
+                    <CircularProgress size={18} color="inherit" />
                   ) : undefined
                 }
               >
-                {loading
-                  ? "Signing In..."
-                  : "Sign In"}
+                {loading ? "Signing In..." : "Sign In"}
               </Button>
             </Stack>
           </Box>
@@ -223,9 +176,7 @@ export default function Login(): JSX.Element {
               variant="outlined"
               startIcon={<GoogleIcon />}
               disabled={loading}
-              onClick={() =>
-                oauthRedirect("google")
-              }
+              onClick={() => oauthRedirect("google")}
             >
               Continue with Google
             </Button>
@@ -234,25 +185,15 @@ export default function Login(): JSX.Element {
               variant="outlined"
               startIcon={<GitHubIcon />}
               disabled={loading}
-              onClick={() =>
-                oauthRedirect("github")
-              }
+              onClick={() => oauthRedirect("github")}
             >
               Continue with GitHub
             </Button>
           </Stack>
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            textAlign="center"
-          >
+          <Typography variant="body2" color="text.secondary" textAlign="center">
             Don't have an account?{" "}
-            <Link
-              component={RouterLink}
-              to="/register"
-              underline="hover"
-            >
+            <Link component={RouterLink} to="/register" underline="hover">
               Create one
             </Link>
           </Typography>

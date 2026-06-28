@@ -12,18 +12,10 @@ import {
   Typography,
 } from "@mui/material";
 
-import {
-  Dashboard,
-  Folder,
-  People,
-  Settings,
-} from "@mui/icons-material";
+import { Dashboard, Folder, People, Settings } from "@mui/icons-material";
 
 import { useMemo } from "react";
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { paths } from "@/app/router/path";
@@ -105,9 +97,7 @@ export function Sidebar(): JSX.Element {
       <Box className="flex h-full flex-col">
         <Box className="flex items-center gap-3 border-b border-gray-200 px-5 py-6">
           <Avatar>
-            {user?.firstName?.[0] ??
-              user?.email?.[0]?.toUpperCase() ??
-              "U"}
+            {user?.firstName?.[0] ?? user?.email?.[0]?.toUpperCase() ?? "U"}
           </Avatar>
 
           <Box>
@@ -115,10 +105,7 @@ export function Sidebar(): JSX.Element {
               {user?.firstName ?? "User"}
             </Typography>
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
+            <Typography variant="body2" color="text.secondary">
               {user?.email}
             </Typography>
           </Box>
@@ -128,9 +115,7 @@ export function Sidebar(): JSX.Element {
           {visibleItems.map((item) => {
             const active =
               location.pathname === item.path ||
-              location.pathname.startsWith(
-                `${item.path}/`,
-              );
+              location.pathname.startsWith(`${item.path}/`);
 
             return (
               <ListItemButton
@@ -150,16 +135,11 @@ export function Sidebar(): JSX.Element {
         <Divider />
 
         <Box className="px-5 py-4">
-          <Typography
-            variant="caption"
-            color="text.secondary"
-          >
+          <Typography variant="caption" color="text.secondary">
             Vite Starter
           </Typography>
 
-          <Typography variant="body2">
-            React 19 • Vite 7
-          </Typography>
+          <Typography variant="body2">React 19 • Vite 7</Typography>
         </Box>
       </Box>
     </Drawer>

@@ -9,12 +9,7 @@ import {
 } from "@mui/material";
 
 type LoadingType =
-  | "circular"
-  | "linear"
-  | "dots"
-  | "lines"
-  | "gradient"
-  | "skeleton";
+  "circular" | "linear" | "dots" | "lines" | "gradient" | "skeleton";
 
 interface LoadingProps {
   type?: LoadingType;

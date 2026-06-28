@@ -12,9 +12,7 @@ const DashboardPage = lazy(
   () => import("@/features/dashboard/pages/Dashboard"),
 );
 
-const ProfilePage = lazy(
-  () => import("@/features/profile/pages/Profile"),
-);
+const ProfilePage = lazy(() => import("@/features/profile/pages/Profile"));
 
 export const dashboardRoutes: RouteObject = {
   id: "dashboard",

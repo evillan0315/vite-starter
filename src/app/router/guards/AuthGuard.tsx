@@ -14,13 +14,7 @@ const AuthGuard: React.FC = () => {
    * Wait until the authentication state has been initialized.
    */
   if (loading) {
-    return (
-      <Loading
-        type="gradient"
-        fullscreen
-        message="Authenticating..."
-      />
-    );
+    return <Loading type="gradient" fullscreen message="Authenticating..." />;
   }
 
   /**

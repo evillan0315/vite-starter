@@ -20,10 +20,7 @@ export function LoadingPortal(): JSX.Element | null {
 
   return createPortal(
     <div className="fixed inset-0 z-2000 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-      <Loading
-        type={loading.type}
-        message={loading.message}
-      />
+      <Loading type={loading.type} message={loading.message} />
     </div>,
     portalRoot,
   );
