@@ -313,8 +313,7 @@ let theme = createTheme({
 
         filledPrimary: {
           color: "#1A1208",
-          background:
-            "linear-gradient(90deg,#B88F5C,#E6C27A,#8A642F)",
+          background: "linear-gradient(90deg,#B88F5C,#E6C27A,#8A642F)",
         },
 
         outlined: {

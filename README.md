@@ -1,6 +1,10 @@
 # Vite Starter
 
-A modern frontend starter template built with **React 19**, **TypeScript**, and **Vite 7**. This project provides a clean, scalable foundation for building production-ready web applications with authentication, routing, state management, and modern UI tooling.
+A modern frontend starter template built with **React 19**, **TypeScript**, and
+**Vite 7**.
+
+This project provides a clean, scalable foundation for building production-ready
+web applications with authentication, routing, state management, and modern UI tooling.
 
 ---
 
@@ -289,16 +293,8 @@ MIT License
 
 ## Author
 
-**Eddie Villanueva**
+### **Eddie Villanueva**
 
-Email
-
-[evillan0315@gmail.com](mailto:evillan0315@gmail.com)
-
-GitHub
-
-https://github.com/evillan0315
-
-LinkedIn
-
-https://www.linkedin.com/in/eddie-villalon/
+- Email: [evillan0315@gmail.com](mailto:evillan0315@gmail.com)
+- GitHub: [https://github.com/evillan0315](ttps://github.com/evillan0315))
+- LinkedIn: [https://www.linkedin.com/in/eddie-villalon/](https://www.linkedin.com/in/eddie-villalon/))
