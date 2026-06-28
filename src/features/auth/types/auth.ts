@@ -1,26 +1,69 @@
 /**
- * Represents credentials for email/password login.
+ * Credentials used for email/password authentication.
  */
 export interface LoginCredentials {
   email: string;
-  password: string; // Changed from passwordHash to password
+  password: string;
 }
 
 /**
- * Represents the profile of an authenticated user.
+ * Authenticated user profile.
  */
 export interface UserProfile {
   id: string;
+
   email: string;
+
   firstName?: string;
   lastName?: string;
+
+  /**
+   * Optional display name.
+   */
+  name?: string;
+
+  /**
+   * Optional avatar URL.
+   */
+  avatar?: string;
+
+  /**
+   * Primary role.
+   */
+  role?: string;
+
+  /**
+   * Multiple roles for RBAC.
+   */
   roles?: string[];
+
+  /**
+   * Additional permissions.
+   */
+  permissions?: string[];
 }
 
 /**
- * Represents the response received after a successful login or token validation.
+ * Authentication response.
  */
 export interface AuthResponse {
+  /**
+   * JWT access token.
+   */
   token: string;
+
+  /**
+   * Optional refresh token.
+   */
+  refreshToken?: string;
+
+  /**
+   * Authenticated user.
+   */
   user: UserProfile;
+
+  /**
+   * Expiration timestamp (Unix epoch seconds).
+   */
+  expiresAt?: number;
 }

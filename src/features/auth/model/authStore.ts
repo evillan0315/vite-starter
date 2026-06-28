@@ -1,11 +1,12 @@
 import { atom } from "nanostores";
+
 import { authService } from "@/features/auth/api/authService";
 
-import type { LoginCredentials, UserProfile } from "@/features/auth/types/auth";
+import type {
+  LoginCredentials,
+  UserProfile,
+} from "@/features/auth/types/auth";
 
-/**
- * Auth state model
- */
 export interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
@@ -14,22 +15,18 @@ export interface AuthState {
   error: string | null;
 }
 
-/**
- * Safe localStorage access (SSR-safe future proofing)
- */
-const getInitialToken = (): string | null => {
+const STORAGE_KEY = "jwt_token";
+
+const getStoredToken = (): string | null => {
   try {
-    return localStorage.getItem("jwt_token");
+    return localStorage.getItem(STORAGE_KEY);
   } catch {
     return null;
   }
 };
 
-const initialToken = getInitialToken();
+const initialToken = getStoredToken();
 
-/**
- * Global auth store
- */
 export const authStore = atom<AuthState>({
   isLoggedIn: Boolean(initialToken),
   token: initialToken,
@@ -38,79 +35,14 @@ export const authStore = atom<AuthState>({
   error: null,
 });
 
-/**
- * Internal helper: safe state update
- */
-const updateAuth = (patch: Partial<AuthState>) => {
-  const current = authStore.get();
+const setState = (patch: Partial<AuthState>): void => {
   authStore.set({
-    ...current,
+    ...authStore.get(),
     ...patch,
   });
 };
 
-/**
- * Persist token changes
- */
-authStore.listen((state) => {
-  try {
-    if (state.token) {
-      localStorage.setItem("jwt_token", state.token);
-    } else {
-      localStorage.removeItem("jwt_token");
-    }
-  } catch {
-    // ignore storage errors (SSR / privacy mode safe)
-  }
-});
-
-/**
- * Set auth after login / OAuth
- */
-export const setAuthDetails = (token: string, user: UserProfile) => {
-  authStore.set({
-    isLoggedIn: true,
-    token,
-    user,
-    loading: false,
-    error: null,
-  });
-};
-
-/**
- * Login flow
- */
-export const loginUser = async (credentials: LoginCredentials) => {
-  updateAuth({ loading: true, error: null });
-
-  try {
-    const { token, user } = await authService.login(credentials);
-
-    setAuthDetails(token, user);
-
-    return { success: true };
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Login failed";
-
-    updateAuth({
-      loading: false,
-      error: message,
-    });
-
-    return { success: false, error: message };
-  }
-};
-
-/**
- * Logout flow
- */
-export const logoutUser = async () => {
-  try {
-    await authService.logout();
-  } catch {
-    // ignore backend logout failure (still clear local state)
-  }
-
+const clearSession = (): void => {
   authStore.set({
     isLoggedIn: false,
     token: null,
@@ -120,58 +52,143 @@ export const logoutUser = async () => {
   });
 };
 
-/**
- * Fetch current user profile
- */
-export const fetchUserProfile = async () => {
-  const { token, user } = authStore.get();
+authStore.listen(({ token }) => {
+  try {
+    if (token) {
+      localStorage.setItem(STORAGE_KEY, token);
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  } catch {
+    // Ignore storage failures.
+  }
+});
 
-  if (!token || user) return;
+export const setAuthDetails = (
+  token: string,
+  user: UserProfile,
+): void => {
+  authStore.set({
+    isLoggedIn: true,
+    token,
+    user,
+    loading: false,
+    error: null,
+  });
+};
 
-  updateAuth({ loading: true, error: null });
+export const setLoading = (loading: boolean): void => {
+  setState({ loading });
+};
+
+export const setError = (error: string | null): void => {
+  setState({ error });
+};
+
+export const loginUser = async (
+  credentials: LoginCredentials,
+): Promise<{
+  success: boolean;
+  error?: string;
+}> => {
+  setState({
+    loading: true,
+    error: null,
+  });
 
   try {
-    const profile = await authService.getProfile();
+    const response = await authService.login(credentials);
 
-    updateAuth({
-      user: profile,
-      loading: false,
-    });
-  } catch (err) {
+    setAuthDetails(response.token, response.user);
+
+    return {
+      success: true,
+    };
+  } catch (error) {
     const message =
-      err instanceof Error ? err.message : "Failed to fetch profile";
+      error instanceof Error ? error.message : "Login failed.";
 
-    // invalidate session on auth failure
-    authStore.set({
-      isLoggedIn: false,
-      token: null,
-      user: null,
+    setState({
       loading: false,
       error: message,
     });
 
+    return {
+      success: false,
+      error: message,
+    };
+  }
+};
+
+export const logoutUser = async (): Promise<void> => {
+  try {
+    await authService.logout();
+  } finally {
+    clearSession();
+  }
+};
+
+let profileRequest: Promise<void> | null = null;
+
+export const fetchUserProfile = async (): Promise<void> => {
+  const state = authStore.get();
+
+  if (!state.token || state.user) {
+    return;
+  }
+
+  if (profileRequest) {
+    return profileRequest;
+  }
+
+  profileRequest = (async () => {
+    setState({
+      loading: true,
+      error: null,
+    });
+
     try {
-      await authService.logout();
-    } catch {
-      // ignore
+      const user = await authService.getProfile();
+
+      setState({
+        user,
+        loading: false,
+      });
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch profile.";
+
+      clearSession();
+
+      setState({
+        error: message,
+      });
+
+      try {
+        await authService.logout();
+      } catch {
+        // Ignore backend logout failures.
+      }
+    } finally {
+      profileRequest = null;
     }
-  }
+  })();
+
+  return profileRequest;
 };
 
-/**
- * Initialize auth on app bootstrap
- */
-export const initAuth = async () => {
-  const { isLoggedIn, token, user } = authStore.get();
+export const initAuth = async (): Promise<void> => {
+  const { token, user } = authStore.get();
 
-  if (isLoggedIn && token && !user) {
-    await fetchUserProfile();
+  if (!token || user) {
+    return;
   }
+
+  await fetchUserProfile();
 };
 
-/**
- * Get token (for interceptors)
- */
 export const getAuthToken = (): string | null => {
   return authStore.get().token;
 };

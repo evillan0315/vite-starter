@@ -5,7 +5,9 @@ import { AuthLayout } from "../layouts";
 import { paths } from "../path";
 import type { RouteHandle } from "../route-handle";
 
-const LoginPage = lazy(() => import("@/features/auth/pages/Login"));
+const LoginPage = lazy(
+  () => import("@/features/auth/pages/Login"),
+);
 
 const AuthCallbackPage = lazy(
   () => import("@/features/auth/pages/AuthCallback"),

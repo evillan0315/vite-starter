@@ -2,23 +2,19 @@ import type { JSX } from "react";
 
 import { Outlet } from "react-router-dom";
 
-import { Navbar } from "@/widgets/navbar/Navbar";
 import { Sidebar } from "@/widgets/sidebar/Sidebar";
 
 export function DashboardLayout(): JSX.Element {
   return (
-    <div className="flex min-h-dvh bg-gray-50">
+    <div className="flex min-h-dvh ">
       {/* Sidebar */}
-      <aside className="hidden shrink-0 border-r border-gray-200 bg-white lg:block">
+      <aside className="hidden shrink-0  lg:block">
         <Sidebar />
       </aside>
 
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Header */}
-        <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/90 backdrop-blur">
-          <Navbar />
-        </header>
+
 
         {/* Page */}
         <main className="flex-1 overflow-y-auto">
