@@ -1,6 +1,9 @@
-import { atom } from 'nanostores';
-import { authService } from '@/components/auth/api/authService';
-import type { LoginCredentials, UserProfile } from '@/components/auth/types/auth';
+import { atom } from "nanostores";
+import { authService } from "@/components/auth/api/authService";
+import type {
+  LoginCredentials,
+  UserProfile,
+} from "@/components/auth/types/auth";
 
 /**
  * Interface representing the authentication state in the store.
@@ -14,7 +17,7 @@ interface AuthState {
 }
 
 // Load initial token from localStorage if available
-const initialToken = localStorage.getItem('jwt_token');
+const initialToken = localStorage.getItem("jwt_token");
 
 /**
  * Nanostore atom for managing global authentication state.
@@ -30,9 +33,9 @@ export const authStore = atom<AuthState>({
 // Subscribe to changes and persist the token to localStorage
 authStore.listen((state) => {
   if (state.token) {
-    localStorage.setItem('jwt_token', state.token);
+    localStorage.setItem("jwt_token", state.token);
   } else {
-    localStorage.removeItem('jwt_token');
+    localStorage.removeItem("jwt_token");
   }
 });
 
@@ -65,7 +68,7 @@ export const loginUser = async (credentials: LoginCredentials) => {
     setAuthDetails(token, user);
     return { success: true };
   } catch (error) {
-    const errorMessage = (error as Error).message || 'Login failed';
+    const errorMessage = (error as Error).message || "Login failed";
     authStore.set({
       ...authStore.get(),
       loading: false,
@@ -102,7 +105,7 @@ export const fetchUserProfile = async () => {
     const user = await authService.getProfile();
     authStore.set({ ...current, user, loading: false, error: null });
   } catch (error) {
-    console.error('Failed to fetch user profile:', error);
+    console.error("Failed to fetch user profile:", error);
     // If fetching profile fails, token might be invalid or expired. Log out.
     logoutUser();
     authStore.set({

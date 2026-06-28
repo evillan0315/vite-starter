@@ -1,63 +1,117 @@
-import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
-import LoginIcon from '@mui/icons-material/Login';
-import HomeIcon from '@mui/icons-material/Home';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useAuth } from '@/components/auth/hooks/useAuth';
+import React, { useCallback } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import {
+  AppBar,
+  Button,
+  Chip,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+import { useAuth } from "@/components/auth/hooks/useAuth";
+
+interface NavButtonProps {
+  to?: string;
+  icon: React.ReactNode;
+  label: React.ReactNode;
+  onClick?: () => void;
+}
+
+const NavButton: React.FC<NavButtonProps> = ({ to, icon, label, onClick }) => (
+  <Button
+    color="inherit"
+    startIcon={icon}
+    component={to ? RouterLink : "button"}
+    to={to}
+    onClick={onClick}
+    sx={{
+      borderRadius: 2,
+      px: 2,
+      fontWeight: 500,
+    }}
+  >
+    {label}
+  </Button>
+);
 
 export const Navbar: React.FC = () => {
-  const { isLoggedIn, user, logout } = useAuth();
   const navigate = useNavigate();
+  const { isLoggedIn, user, logout } = useAuth();
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     await logout();
-    navigate('/login');
-  };
+    navigate("/login", { replace: true });
+  }, [logout, navigate]);
 
   return (
-    <AppBar position="static" color="primary" elevation={1} sx={{ bgcolor: 'primary.dark', borderRadius: 0, p:0 }}>
-      <Toolbar className="justify-between">
+    <AppBar
+      position="sticky"
+      elevation={0}
+      sx={{
+        borderBottom: 1,
+        borderColor: "divider",
+      }}
+    >
+      <Toolbar
+        disableGutters
+        sx={{
+          minHeight: 52,
+          px: 2,
+          py: 0,
+          justifyContent: "space-between",
+
+          "@media (min-width:600px)": {
+            minHeight: 52,
+          },
+        }}
+      >
         <Typography
-          variant="h6"
           component={RouterLink}
           to="/"
-          sx={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}
+          variant="h6"
+          sx={{
+            textDecoration: "none",
+            color: "inherit",
+            fontWeight: 700,
+            letterSpacing: 0.5,
+          }}
         >
-          Codejector Starter App
+          Vite Starter
         </Typography>
 
-        <Box className="flex items-center gap-4">
+        <Stack direction="row" spacing={1} alignItems="center">
           {isLoggedIn ? (
             <>
-              <Button
-                color="inherit"
-                startIcon={<HomeIcon />}
-                component={RouterLink}
-                to="/"
-              >
-                Home
-              </Button>
-              <Button color="inherit" startIcon={<AccountCircleIcon />}>
-                {user?.email || 'Profile'}
-              </Button>
-              <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />}>
-                Logout
-              </Button>
+              <NavButton to="/" icon={<HomeIcon />} label="Home" />
+
+              <Chip
+                icon={<AccountCircleIcon />}
+                label={user?.email ?? "Profile"}
+                color="primary"
+                variant="outlined"
+                sx={{
+                  fontWeight: 500,
+                }}
+              />
+
+              <NavButton
+                icon={<LogoutIcon />}
+                label="Logout"
+                onClick={handleLogout}
+              />
             </>
           ) : (
-            <Button
-              color="inherit"
-              startIcon={<LoginIcon />}
-              component={RouterLink}
-              to="/login"
-            >
-              Login
-            </Button>
+            <NavButton to="/login" icon={<LoginIcon />} label="Login" />
           )}
-        </Box>
+        </Stack>
       </Toolbar>
     </AppBar>
   );
 };
+
+export default Navbar;

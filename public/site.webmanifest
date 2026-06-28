@@ -1,0 +1,25 @@
+{
+  "name": "Vite Starter",
+  "short_name": "Vite Starter",
+  "description": "Modern React 19 + TypeScript + Vite 7 starter template with Material UI v6 and Tailwind CSS v4.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FDFBF7",
+  "theme_color": "#8A642F",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

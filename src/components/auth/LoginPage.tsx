@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import {
   Box,
   Button,
@@ -10,21 +10,21 @@ import {
   Paper,
   Link,
   Stack,
-} from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'; // Changed icon
-import { useAuth } from '@/components/auth/hooks/useAuth';
+} from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch"; // Changed icon
+import { useAuth } from "@/components/auth/hooks/useAuth";
 
 export const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, loading, error, isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      navigate('/'); // Redirect to home if already logged in
+      navigate("/"); // Redirect to home if already logged in
     }
   }, [isLoggedIn, navigate]);
 
@@ -40,11 +40,11 @@ export const LoginPage: React.FC = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `/api/auth/google?cli_port=${import.meta.env.VITE_FRONTEND_PORT}`;
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
   };
 
   const handleGitHubLogin = () => {
-    window.location.href = `/api/auth/github?cli_port=${import.meta.env.VITE_FRONTEND_PORT}`;
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
   };
 
   const paperSx = {
@@ -52,7 +52,7 @@ export const LoginPage: React.FC = () => {
     mb: 3,
     borderRadius: 2,
     boxShadow: 3,
-    bgcolor: 'background.paper',
+    bgcolor: "background.paper",
   };
 
   return (
@@ -61,7 +61,7 @@ export const LoginPage: React.FC = () => {
         direction="row"
         alignItems="center"
         spacing={1}
-        sx={{ mb: 4, color: 'primary.main' }}
+        sx={{ mb: 4, color: "primary.main" }}
       >
         <RocketLaunchIcon sx={{ fontSize: 60 }} />
         <Typography variant="h3" component="div" className="font-extrabold">
@@ -86,13 +86,13 @@ export const LoginPage: React.FC = () => {
             required
             disabled={loading}
             sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'primary.light' },
-                '&:hover fieldset': { borderColor: 'primary.main' },
-                '&.Mui-focused fieldset': { borderColor: 'primary.dark' },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "primary.light" },
+                "&:hover fieldset": { borderColor: "primary.main" },
+                "&.Mui-focused fieldset": { borderColor: "primary.dark" },
               },
-              '& .MuiInputLabel-root': { color: 'text.secondary' },
-              '& .MuiInputBase-input': { color: 'text.primary' },
+              "& .MuiInputLabel-root": { color: "text.secondary" },
+              "& .MuiInputBase-input": { color: "text.primary" },
               mb: 2,
             }}
           />
@@ -105,13 +105,13 @@ export const LoginPage: React.FC = () => {
             required
             disabled={loading}
             sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'primary.light' },
-                '&:hover fieldset': { borderColor: 'primary.main' },
-                '&.Mui-focused fieldset': { borderColor: 'primary.dark' },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "primary.light" },
+                "&:hover fieldset": { borderColor: "primary.main" },
+                "&.Mui-focused fieldset": { borderColor: "primary.dark" },
               },
-              '& .MuiInputLabel-root': { color: 'text.secondary' },
-              '& .MuiInputBase-input': { color: 'text.primary' },
+              "& .MuiInputLabel-root": { color: "text.secondary" },
+              "& .MuiInputBase-input": { color: "text.primary" },
               mb: 2,
             }}
           />
@@ -122,21 +122,23 @@ export const LoginPage: React.FC = () => {
             fullWidth
             sx={{ mt: 2, mb: 3 }}
             disabled={loading}
-            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+            startIcon={
+              loading ? <CircularProgress size={20} color="inherit" /> : null
+            }
             className="py-3 text-lg font-bold"
           >
             Login with Email
           </Button>
         </form>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Button
             variant="outlined"
             fullWidth
             startIcon={<GoogleIcon />}
             onClick={handleGoogleLogin}
             disabled={loading}
-            sx={{ borderColor: 'grey.400', color: 'text.primary' }}
+            sx={{ borderColor: "grey.400", color: "text.primary" }}
           >
             Sign in with Google
           </Button>
@@ -146,21 +148,24 @@ export const LoginPage: React.FC = () => {
             startIcon={<GitHubIcon />}
             onClick={handleGitHubLogin}
             disabled={loading}
-            sx={{ borderColor: 'grey.400', color: 'text.primary' }}
+            sx={{ borderColor: "grey.400", color: "text.primary" }}
           >
             Sign in with GitHub
           </Button>
         </Box>
 
-        <Typography variant="body2" sx={{ mt: 3, textAlign: 'center', color: 'text.secondary' }}>
-          Don't have an account?{' '}
+        <Typography
+          variant="body2"
+          sx={{ mt: 3, textAlign: "center", color: "text.secondary" }}
+        >
+          Don't have an account?{" "}
           <Link
             component={RouterLink}
             to="/register"
             sx={{
-              textDecoration: 'none',
-              '&:hover': { textDecoration: 'underline' },
-              color: 'primary.main',
+              textDecoration: "none",
+              "&:hover": { textDecoration: "underline" },
+              color: "primary.main",
             }}
           >
             Register

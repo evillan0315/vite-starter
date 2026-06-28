@@ -1,11 +1,9 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Basic global styles, removed conflicting ones for MUI */
 :root {
-  font-family: 'Roboto', 'Helvetica', 'Arial', 'Inter', sans-serif;
   line-height: 1.5;
-  font-weight: 400;
   color-scheme: light dark;
   /* Removed explicit color/background-color to let MUI/Tailwind handle them */
   font-synthesis: none;

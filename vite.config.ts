@@ -1,8 +1,8 @@
-import { defineConfig, loadEnv } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
-import path from 'path';
+import path from "path";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()].flat().filter(Boolean),
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
+        "@": path.resolve(__dirname, "src"),
       },
     },
     build: {
@@ -22,30 +22,36 @@ export default defineConfig(({ mode }) => {
       port: 4173, // Default preview server port
     },
     server: {
-      port: 3000,
+      port: Number(env.VITE_FRONTEND_PORT),
       proxy: {
-        '/api': {
+        "/api": {
           target: env.VITE_API_URL,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
       cors: {
-        origin: ['*'],
-        methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PATCH', 'PUT'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        origin: ["*"],
+        methods: ["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+        allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
       },
-      allowedHosts: ['app.local', 'localhost'],
+      allowedHosts: ["app.local", "localhost"],
     },
     define: {
-      'process.env.NODE_ENV': JSON.stringify(mode),
+      "process.env.NODE_ENV": JSON.stringify(mode),
       // These define statements are only relevant if the frontend code directly uses them.
       // Current services use relative '/api' paths handled by proxy/rewrites.
-      'import.meta.env.GITHUB_CALLBACK_URL': JSON.stringify(env.GITHUB_CALLBACK_URL),
-      'import.meta.env.GOOGLE_CALLBACK_URL': JSON.stringify(env.GOOGLE_CALLBACK_URL),
-      'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
-      'import.meta.env.VITE_FRONTEND_PORT': JSON.stringify(env.VITE_FRONTEND_PORT),
+      "import.meta.env.GITHUB_CALLBACK_URL": JSON.stringify(
+        env.GITHUB_CALLBACK_URL,
+      ),
+      "import.meta.env.GOOGLE_CALLBACK_URL": JSON.stringify(
+        env.GOOGLE_CALLBACK_URL,
+      ),
+      "import.meta.env.VITE_API_URL": JSON.stringify(env.VITE_API_URL),
+      "import.meta.env.VITE_FRONTEND_PORT": JSON.stringify(
+        env.VITE_FRONTEND_PORT,
+      ),
     },
   };
 });

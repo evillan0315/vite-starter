@@ -1,8 +1,13 @@
-import { useStore } from '@nanostores/react';
-import { authStore, logoutUser, loginUser, fetchUserProfile } from '@/components/auth/stores/authStore';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import type { LoginCredentials } from '@/components/auth/types/auth';
+import { useStore } from "@nanostores/react";
+import {
+  authStore,
+  logoutUser,
+  loginUser,
+  fetchUserProfile,
+} from "@/components/auth/stores/authStore";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import type { LoginCredentials } from "@/components/auth/types/auth";
 
 /**
  * Custom hook for managing authentication state and actions.
@@ -25,7 +30,7 @@ export const useAuth = () => {
    */
   const logout = () => {
     logoutUser();
-    navigate('/login');
+    navigate("/login");
   };
 
   /**
@@ -37,7 +42,7 @@ export const useAuth = () => {
   const login = async (credentials: LoginCredentials) => {
     const result = await loginUser(credentials);
     if (result.success) {
-      navigate('/'); // Redirect to home on successful login
+      navigate("/"); // Redirect to home on successful login
     }
     return result;
   };

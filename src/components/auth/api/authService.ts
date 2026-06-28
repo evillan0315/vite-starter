@@ -1,8 +1,12 @@
-import axios from 'axios';
-import { getAuthToken } from '@/components/auth/stores/authStore';
-import type { LoginCredentials, UserProfile, AuthResponse } from '@/components/auth/types/auth';
+import axios from "axios";
+import { getAuthToken } from "@/components/auth/stores/authStore";
+import type {
+  LoginCredentials,
+  UserProfile,
+  AuthResponse,
+} from "@/components/auth/types/auth";
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = "/api";
 
 /**
  * Service for interacting with the backend authentication API.
@@ -16,15 +20,23 @@ export const authService = {
    */
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     try {
-      const response = await axios.post<AuthResponse>(`${API_BASE_URL}/auth/login`, credentials, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await axios.post<AuthResponse>(
+        `${API_BASE_URL}/auth/login`,
+        credentials,
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || error.message || 'Login failed');
+        throw new Error(
+          error.response?.data?.message || error.message || "Login failed",
+        );
       }
-      throw new Error((error as Error).message || 'An unknown error occurred during login');
+      throw new Error(
+        (error as Error).message || "An unknown error occurred during login",
+      );
     }
   },
 
@@ -46,7 +58,7 @@ export const authService = {
         },
       );
     } catch (error) {
-      console.error('Logout failed on backend:', error);
+      console.error("Logout failed on backend:", error);
       // Even if backend logout fails, client-side state will be cleared by authStore action
     }
   },
@@ -60,7 +72,7 @@ export const authService = {
   getProfile: async (): Promise<UserProfile> => {
     const token = getAuthToken();
     if (!token) {
-      throw new Error('Authentication token is missing. Please log in.');
+      throw new Error("Authentication token is missing. Please log in.");
     }
 
     try {
@@ -71,11 +83,14 @@ export const authService = {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message || error.message || 'Failed to fetch user profile',
+          error.response?.data?.message ||
+            error.message ||
+            "Failed to fetch user profile",
         );
       }
       throw new Error(
-        (error as Error).message || 'An unknown error occurred while fetching profile',
+        (error as Error).message ||
+          "An unknown error occurred while fetching profile",
       );
     }
   },

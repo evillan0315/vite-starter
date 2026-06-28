@@ -1,122 +1,304 @@
-# Vite Starter Frontend Application
+# Vite Starter
 
-This is a versatile frontend application starter, built with React, TypeScript, and Vite. It provides a foundational user interface for authentication, managing user profiles, and interacting with backend services.
+A modern frontend starter template built with **React 19**, **TypeScript**, and **Vite 7**. This project provides a clean, scalable foundation for building production-ready web applications with authentication, routing, state management, and modern UI tooling.
 
-## ✨ Features
+---
 
--   **React 19 & TypeScript:** Modern frontend development with strong typing.
--   **Vite 5:** Fast development server and build tooling.
--   **Material UI v6:** Comprehensive and customizable UI components for a polished look.
--   **Tailwind CSS v4:** Utility-first CSS for flexible and responsive styling.
--   **Nanostores:** Lightweight and efficient state management.
--   **React Router DOM v6:** Declarative routing for navigation.
--   **Authentication:** Secure user login via email/password, Google OAuth, and GitHub OAuth.
--   **Socket.IO Client:** Real-time communication with backend WebSocket services.
+## Features
 
-## 🚀 Getting Started
+- ⚛️ React 19
+- 📘 TypeScript 5
+- ⚡ Vite 7
+- 🎨 Material UI v6
+- 💨 Tailwind CSS v4
+- 🗄️ Nanostores
+- 🧭 React Router DOM v6
+- 🌐 Axios HTTP client
+- 🔄 Socket.IO Client
+- 🎯 ESLint 9 (Flat Config)
+- ✨ Prettier 3
+- 🎨 Tailwind CSS Prettier Plugin
+- 📱 Responsive UI
+- 🚀 Production-ready project structure
 
-### Prerequisites
+---
 
--   Node.js (LTS version recommended)
--   npm, yarn, or pnpm package manager
--   A running backend API for authentication and other services.
+## Technology Stack
 
-### Installation
+| Technology       | Version | Purpose                 |
+| ---------------- | ------- | ----------------------- |
+| React            | 19      | User Interface          |
+| TypeScript       | 5.9     | Static typing           |
+| Vite             | 7       | Build tool              |
+| Material UI      | 6       | UI components           |
+| Emotion          | 11      | CSS-in-JS styling       |
+| Tailwind CSS     | 4       | Utility-first CSS       |
+| React Router DOM | 6       | Routing                 |
+| Axios            | 1.x     | HTTP client             |
+| Nanostores       | 1.x     | State management        |
+| Socket.IO Client | 4.x     | Real-time communication |
+| ESLint           | 9       | Code linting            |
+| Prettier         | 3       | Code formatting         |
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/evillan0315/vite-starter
-    cd vite-starter
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    # or yarn install
-    # or pnpm install
-    ```
+---
 
-### Environment Variables
+## Requirements
 
-Create a `.env` file in the project root based on the `.env.example` (if provided) or the following structure. These variables are crucial for the application to connect to the backend services and handle OAuth callbacks.
+- Node.js 20 or later
+- npm, pnpm, or Yarn
+
+---
+
+## Installation
+
+Clone the repository.
+
+```bash
+git clone git@github.com:evillan0315/starter.git
+```
+
+Navigate into the project.
+
+```bash
+cd starter
+```
+
+Install dependencies.
+
+```bash
+npm install
+```
+
+Or
+
+```bash
+pnpm install
+```
+
+Or
+
+```bash
+yarn install
+```
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the project root.
 
 ```env
-# Frontend server port
 VITE_FRONTEND_PORT=5173
 
-# Backend API URL (for REST API calls)
-VITE_API_URL="http://localhost:3000/api"
+VITE_FRONTEND_URL=http://localhost:5173
 
-# Backend WebSocket URL
-VITE_WS_URL="ws://localhost:3000"
+VITE_API_URL=http://localhost:3000/api
 
-# Full URL of the backend application
-VITE_BACKEND_URL="http://localhost:3000"
+VITE_BACKEND_URL=http://localhost:3000
 
-# Full URL of this frontend application
-VITE_FRONTEND_URL="http://localhost:5173"
+VITE_WS_URL=ws://localhost:3000
 
-# OAuth Callback URLs (replace with your actual callback URLs registered with Google/GitHub)
-# These are typically configured on the backend, but the frontend might use them for constructing auth initiation URLs.
-GITHUB_CALLBACK_URL="http://localhost:3000/api/auth/github/callback"
-GOOGLE_CALLBACK_URL="http://localhost:3000/api/auth/google/callback"
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
 
-# Node.js environment (e.g., development, production)
+GITHUB_CALLBACK_URL=http://localhost:3000/api/auth/github/callback
+
 NODE_ENV=development
 ```
 
-**Note:** The `VITE_FRONTEND_PORT` is used by Vite's development server, and is passed as a `cli_port` parameter in OAuth redirects.
+---
 
-### Development
+## Available Scripts
 
-To start the development server:
+### Start Development Server
 
 ```bash
 npm run dev
-# or yarn dev
-# or pnpm dev
 ```
 
-This will open the application in your browser (usually `http://localhost:5173`, configurable via `VITE_FRONTEND_PORT`). Vite is configured to proxy `/api` and `/socket.io` requests to the `VITE_API_URL` and `VITE_WS_URL` respectively, handled by the backend server.
+Starts the Vite development server.
 
-### Building for Production
+---
 
-To build the application for production:
+### Build
 
 ```bash
 npm run build
-# or yarn build
-# or pnpm build
 ```
 
-This command compiles the TypeScript code and bundles the assets into the `dist` directory.
+Builds the project for production.
 
-### Linting and Formatting
+---
 
--   Run ESLint to check for code quality issues:
-    ```bash
-    npm run lint
-    ```
--   Format code with Prettier:
-    ```bash
-    npm run format
-    ```
+### Preview Production Build
 
-## 🔐 Authentication
+```bash
+npm run preview
+```
 
-The application uses a JWT-based authentication system:
+Serves the production build locally.
 
--   **Login Page (`LoginPage.tsx`):** Users can log in using email/password or via OAuth with Google and GitHub.
--   **Auth Callback (`AuthCallback.tsx`):** Handles redirects from OAuth providers, extracts the JWT token, and fetches the user profile.
--   **`useAuth` Hook:** Provides a convenient interface for authentication state (`isLoggedIn`, `user`, `loading`, `error`) and actions (`login`, `logout`).
--   **Nanostores (`authStore.ts`):** Manages the global authentication state, persists the JWT token to `localStorage`, and handles fetching user profiles.
--   **`authService.ts`:** Communicates with the backend authentication API endpoints (`/api/auth/login`, `/api/auth/logout`, `/api/auth/me`).
+---
 
-## 🎨 Styling
+### Lint
 
-This project combines Material UI for rich components and Tailwind CSS for utility-first styling. Material UI components are customized using the `theme.ts` file and the `sx` prop, while Tailwind classes are applied directly in JSX for layout and responsive design.
+```bash
+npm run lint
+```
 
-## 📧 Contact
+Runs ESLint using the project's Flat Config configuration.
 
-Eddie Villanueva - [evillan0315@gmail.com](mailto:evillan0315@gmail.com)  
-[LinkedIn](https://www.linkedin.com/in/eddie-villalon/)  
-[GitHub](https://github.com/evillan0315)
+---
+
+### Format
+
+```bash
+npm run format
+```
+
+Formats the project using Prettier and automatically sorts Tailwind CSS classes.
+
+---
+
+## Project Structure
+
+```text
+src/
+├── assets/
+├── components/
+├── config/
+├── constants/
+├── contexts/
+├── hooks/
+├── layouts/
+├── pages/
+├── routes/
+├── services/
+├── stores/
+├── styles/
+├── themes/
+├── types/
+├── utils/
+├── App.tsx
+└── main.tsx
+```
+
+---
+
+## Authentication
+
+The starter is designed to work with a backend that provides JWT authentication.
+
+Typical authentication features include:
+
+- Email and password login
+- Google OAuth
+- GitHub OAuth
+- JWT token storage
+- Protected routes
+- User profile retrieval
+- Automatic session restoration
+
+---
+
+## Styling
+
+The project combines Material UI and Tailwind CSS.
+
+### Material UI
+
+Material UI provides:
+
+- Components
+- Theming
+- Icons
+- Accessibility
+
+### Tailwind CSS
+
+Tailwind CSS is used for:
+
+- Layout
+- Responsive design
+- Utility classes
+- Rapid UI development
+
+---
+
+## State Management
+
+Global application state is managed using **Nanostores**, providing:
+
+- Lightweight stores
+- React bindings
+- High performance
+- Minimal boilerplate
+
+---
+
+## Networking
+
+### REST API
+
+HTTP requests are performed using **Axios**.
+
+### Real-Time Communication
+
+Socket.IO Client is included for:
+
+- Notifications
+- Live updates
+- Chat applications
+- Presence
+- Streaming events
+
+---
+
+## Code Quality
+
+This project includes:
+
+- ESLint 9
+- TypeScript
+- Prettier 3
+- prettier-plugin-tailwindcss
+
+Recommended VS Code extensions:
+
+- ESLint
+- Prettier
+- Tailwind CSS IntelliSense
+- Error Lens
+- GitLens
+- Material Icon Theme
+
+---
+
+## Repository
+
+```text
+git@github.com:evillan0315/starter.git
+```
+
+---
+
+## License
+
+MIT License
+
+---
+
+## Author
+
+**Eddie Villanueva**
+
+Email
+
+[evillan0315@gmail.com](mailto:evillan0315@gmail.com)
+
+GitHub
+
+https://github.com/evillan0315
+
+LinkedIn
+
+https://www.linkedin.com/in/eddie-villalon/
