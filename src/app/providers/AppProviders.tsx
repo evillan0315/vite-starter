@@ -1,13 +1,17 @@
-import React from "react";
+import type { PropsWithChildren, JSX } from "react";
+
 import { LoadingPortal } from "@/shared/ui/loading/LoadingPortal";
 
-export const AppProviders: React.FC<React.PropsWithChildren> = ({
+export function AppProviders({
   children,
-}) => {
+}: PropsWithChildren): JSX.Element {
   return (
     <>
       {children}
+
       <LoadingPortal />
     </>
   );
-};
+}
+
+export default AppProviders;

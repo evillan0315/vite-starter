@@ -1,43 +1,54 @@
-import { lazy } from "react";
 import type { RouteObject } from "react-router-dom";
 
+import AuthGuard from "./guards/AuthGuard";
+import GuestGuard from "./guards/GuestGuard";
+
 import RootLayout from "./layouts/RootLayout";
-import ErrorPage from "./pages/ErrorPage";
-import NotFound from "./pages/NotFound";
 
-/**
- * Lazy-loaded route components
- * (kept isolated from JSX to maintain pure config file)
- */
-const Home = lazy(() => import("@/App"));
-const Login = lazy(() => import("@/features/auth/pages/Login"));
-const Callback = lazy(() => import("@/features/auth/pages/AuthCallback"));
+import { ErrorPage, NotFound } from "./pages";
+import { paths } from "./path";
 
-/**
- * Pure route configuration
- * NO JSX, NO components, NO helpers
- */
+import {
+  authRoutes,
+  dashboardRoutes,
+  publicRoutes,
+} from "./registry";
+
 export const routes: RouteObject[] = [
   {
-    path: "/",
+    id: "root",
+    path: paths.home,
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
+      ...publicRoutes,
+
       {
-        index: true,
-        element: <Home />,
+        element: <GuestGuard />,
+        children: [
+          {
+            path: paths.auth.root,
+            ...authRoutes,
+          },
+        ],
       },
+
       {
-        path: "auth/login",
-        element: <Login />,
+        element: <AuthGuard />,
+        children: [
+          {
+            path: paths.dashboard.root,
+            ...dashboardRoutes,
+          },
+        ],
       },
-      {
-        path: "auth/callback",
-        element: <Callback />,
-      },
+
       {
         path: "*",
         element: <NotFound />,
+        handle: {
+          title: "Page Not Found",
+        },
       },
     ],
   },

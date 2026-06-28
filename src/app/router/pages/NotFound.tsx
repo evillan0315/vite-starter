@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const NotFound = () => (
+export const NotFound = () => (
   <Stack
     spacing={2}
     alignItems="center"
@@ -25,5 +25,3 @@ const NotFound = () => (
     </Button>
   </Stack>
 );
-
-export default NotFound;

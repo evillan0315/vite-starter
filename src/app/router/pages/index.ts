@@ -1,2 +1,3 @@
-export * from "./ErrorPage";
-export * from "./NotFound";
+export { ErrorPage } from "./ErrorPage";
+export { NotFound } from "./NotFound";
+export { HomePage } from "./HomePage";

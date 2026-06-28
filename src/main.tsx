@@ -1,22 +1,65 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import {
+  CssBaseline,
+  ThemeProvider,
+} from "@mui/material";
+import { RouterProvider } from "react-router-dom";
+
+import "@/index.css";
+
+import { bootstrap } from "@/app/bootstrap";
+import { AppProviders } from "@/app/providers/AppProviders";
+import { router } from "@/app/router";
+
+import Loading from "@/shared/ui/Loading";
+
 import theme from "@/themes/theme";
-import { initAuth } from "@/features/auth/model/authStore";
-//import "./index.css";
-import App from "./App";
 
-// Initialize authentication state on app load
-initAuth();
+const rootElement = document.getElementById("root");
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
+if (!rootElement) {
+  throw new Error("Root element '#root' was not found.");
+}
+
+try {
+  await bootstrap();
+
+  createRoot(rootElement).render(
+    <StrictMode>
       <ThemeProvider theme={theme}>
-        <CssBaseline /> {/* Provides a consistent baseline for styling */}
-        <App />
+        <CssBaseline />
+
+        <AppProviders>
+          <Suspense
+            fallback={
+              <Loading
+                type="gradient"
+                fullscreen
+                message="Initializing application..."
+              />
+            }
+          >
+            <RouterProvider router={router} />
+          </Suspense>
+        </AppProviders>
       </ThemeProvider>
-    </BrowserRouter>
-  </StrictMode>,
-);
+    </StrictMode>,
+  );
+} catch (error) {
+  console.error("Application bootstrap failed:", error);
+
+  createRoot(rootElement).render(
+    <StrictMode>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+
+        <Loading
+          type="gradient"
+          fullscreen
+          message="Failed to initialize application."
+        />
+      </ThemeProvider>
+    </StrictMode>,
+  );
+}
