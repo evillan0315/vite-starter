@@ -2,10 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import theme from "@/theme";
+import theme from "@/theme/theme";
 import { initAuth } from "@/components/auth/stores/authStore";
-import "./index.css";
-import App from "./App.tsx";
+//import "./index.css";
+import App from "./App";
 
 // Initialize authentication state on app load
 initAuth();
