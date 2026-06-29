@@ -94,49 +94,129 @@ UI Layer → Feature Modules → State Layer → Service Layer → Backend → I
 
 ```text
 .
-├── README.md
+├── ARCHITECTURE.md
 ├── architecture.svg
 ├── eslint.config.js
+├── FB_VID_8057988324888622043.mp4
 ├── index.html
 ├── kubernetes
 │   └── websocket-pod.yaml
-├── package-lock.json
 ├── package.json
+├── package-lock.json
 ├── public
 │   ├── favicon.svg
 │   ├── site.webmanifest
 │   └── vite.svg
+├── README.md
 ├── scripts
-│   ├── README.md
 │   ├── createApp.sh
-│   └── createAppWithTemplate.sh
+│   ├── createAppWithTemplate.sh
+│   ├── README.md
+│   └── vercel.sh
 ├── src
+│   ├── app
+│   │   ├── App.tsx
+│   │   ├── bootstrap.ts
+│   │   ├── context
+│   │   │   └── index.ts
+│   │   ├── hooks
+│   │   │   └── index.ts
+│   │   ├── index.ts
+│   │   ├── lib
+│   │   │   ├── axios.ts
+│   │   │   └── logger.ts
+│   │   ├── providers
+│   │   │   ├── AppProviders.tsx
+│   │   │   └── index.ts
+│   │   ├── router
+│   │   │   ├── guards
+│   │   │   │   ├── AuthGuard.tsx
+│   │   │   │   ├── GuestGuard.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── hooks
+│   │   │   │   └── index.ts
+│   │   │   ├── index.ts
+│   │   │   ├── layouts
+│   │   │   │   ├── AuthLayout.tsx
+│   │   │   │   ├── DashboardLayout.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   └── RootLayout.tsx
+│   │   │   ├── pages
+│   │   │   │   ├── ErrorPage.tsx
+│   │   │   │   ├── HomePage.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   └── NotFound.tsx
+│   │   │   ├── path.ts
+│   │   │   ├── registry
+│   │   │   │   ├── auth.routes.tsx
+│   │   │   │   ├── dashboard.routes.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   └── public.routes.tsx
+│   │   │   ├── route-handle.ts
+│   │   │   ├── routes
+│   │   │   │   ├── index.ts
+│   │   │   │   └── RouteSuspense.tsx
+│   │   │   ├── routes.tsx
+│   │   │   └── types.ts
+│   │   ├── store
+│   │   │   └── index.ts
+│   │   ├── types
+│   │   │   └── index.ts
+│   │   └── utils
+│   │       └── index.ts
 │   ├── App.css
 │   ├── App.tsx
 │   ├── assets
 │   │   └── react.svg
-│   ├── components
-│   │   ├── Navbar.tsx
+│   ├── features
 │   │   ├── auth
-│   │   │   ├── AuthCallback.tsx
-│   │   │   ├── LoginPage.tsx
 │   │   │   ├── api
 │   │   │   │   └── authService.ts
 │   │   │   ├── hooks
 │   │   │   │   └── useAuth.ts
-│   │   │   ├── stores
+│   │   │   ├── index.ts
+│   │   │   ├── model
 │   │   │   │   └── authStore.ts
+│   │   │   ├── pages
+│   │   │   │   ├── AuthCallback.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   └── Login.tsx
 │   │   │   └── types
-│   │   │       └── auth.ts
-│   │   └── ui
-│   │       └── Loading.tsx
+│   │   │       ├── auth.ts
+│   │   │       └── index.ts
+│   │   ├── dashboard
+│   │   │   └── pages
+│   │   │       └── Dashboard.tsx
+│   │   ├── index.ts
+│   │   └── profile
+│   │       └── pages
+│   │           └── Profile.tsx
 │   ├── index.css
 │   ├── main.tsx
-│   ├── theme
-│   │   └── index.ts
-│   ├── theme.ts
-│   └── vite-env.d.ts
+│   ├── shared
+│   │   ├── state
+│   │   │   └── loading.store.ts
+│   │   └── ui
+│   │       ├── loading
+│   │       │   └── LoadingPortal.tsx
+│   │       ├── Loading.tsx
+│   │       └── ThemeToggle.tsx
+│   ├── themes
+│   │   ├── colors.ts
+│   │   ├── components.ts
+│   │   ├── createTheme.ts
+│   │   ├── index.ts
+│   │   ├── ThemeContext.ts
+│   │   ├── ThemeProvider.tsx
+│   │   └── useThemeMode.ts
+│   ├── vite-env.d.ts
+│   └── widgets
+│       ├── navbar
+│       │   └── Navbar.tsx
+│       └── sidebar
+│           └── Sidebar.tsx
 ├── tsconfig.app.json
+├── tsconfig.app.tsbuildinfo
 ├── tsconfig.json
 ├── tsconfig.node.json
 └── vite.config.ts
