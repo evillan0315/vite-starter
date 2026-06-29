@@ -25,8 +25,8 @@ export interface ThemeContextValue {
   setColorMode: (mode: PaletteMode) => void;
 }
 
-export const ThemeContext = createContext<
-  ThemeContextValue | undefined
->(undefined);
+export const ThemeContext = createContext<ThemeContextValue | undefined>(
+  undefined,
+);
 
 ThemeContext.displayName = "ThemeContext";

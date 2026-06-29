@@ -68,11 +68,9 @@ export const gradients = {
   primaryHover:
     "linear-gradient(90deg,#C49B66 0%,#F0CF88 45%,#D4AB69 70%,#99723B 100%)",
 
-  gold:
-    "linear-gradient(135deg,#FFF8E8 0%,#E6C27A 35%,#B88F5C 65%,#8A642F 100%)",
+  gold: "linear-gradient(135deg,#FFF8E8 0%,#E6C27A 35%,#B88F5C 65%,#8A642F 100%)",
 
-  dark:
-    "linear-gradient(180deg,#141414 0%,#060606 100%)",
+  dark: "linear-gradient(180deg,#141414 0%,#060606 100%)",
 } as const;
 
 /**

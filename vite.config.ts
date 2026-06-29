@@ -52,7 +52,7 @@ export default defineConfig(({ mode }) => {
       "import.meta.env.VITE_FRONTEND_PORT": JSON.stringify(
         env.VITE_FRONTEND_PORT,
       ),
-       "import.meta.env.VITE_USE_MOCK_AUTH": env.VITE_USE_MOCK_AUTH,
+      "import.meta.env.VITE_USE_MOCK_AUTH": env.VITE_USE_MOCK_AUTH,
     },
   };
 });

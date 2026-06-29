@@ -81,19 +81,14 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const toggleColorMode = useCallback(() => {
-    setMode((previousMode) =>
-      previousMode === "light" ? "dark" : "light",
-    );
+    setMode((previousMode) => (previousMode === "light" ? "dark" : "light"));
   }, []);
 
   const setColorMode = useCallback((newMode: PaletteMode) => {
     setMode(newMode);
   }, []);
 
-  const theme = useMemo(
-    () => createAppTheme(mode),
-    [mode],
-  );
+  const theme = useMemo(() => createAppTheme(mode), [mode]);
 
   const contextValue = useMemo(
     () => ({

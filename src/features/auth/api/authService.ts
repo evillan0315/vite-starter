@@ -10,11 +10,9 @@ import type {
 
 const API_BASE_URL = "/api";
 
-const USE_MOCK_AUTH =
-  import.meta.env.VITE_USE_MOCK_AUTH === true;
+const USE_MOCK_AUTH = import.meta.env.VITE_USE_MOCK_AUTH === true;
 
-const sleep = (ms = 800) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms = 800) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const MOCK_USER: UserProfile = {
   id: "1",
@@ -25,13 +23,10 @@ const MOCK_USER: UserProfile = {
   role: "admin",
 };
 
-const MOCK_TOKEN =
-  "mock-jwt-token-1234567890abcdefghijklmnopqrstuvwxyz";
+const MOCK_TOKEN = "mock-jwt-token-1234567890abcdefghijklmnopqrstuvwxyz";
 
 export const authService = {
-  async login(
-    credentials: LoginCredentials,
-  ): Promise<AuthResponse> {
+  async login(credentials: LoginCredentials): Promise<AuthResponse> {
     if (USE_MOCK_AUTH) {
       await sleep();
 
@@ -63,16 +58,11 @@ export const authService = {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message ??
-            error.message ??
-            "Login failed",
+          error.response?.data?.message ?? error.message ?? "Login failed",
         );
       }
 
-      throw new Error(
-        (error as Error).message ??
-          "Unknown login error",
-      );
+      throw new Error((error as Error).message ?? "Unknown login error");
     }
   },
 
@@ -116,14 +106,11 @@ export const authService = {
     }
 
     try {
-      const { data } = await axios.get<UserProfile>(
-        `${API_BASE_URL}/auth/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const { data } = await axios.get<UserProfile>(`${API_BASE_URL}/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       return data;
     } catch (error) {
@@ -135,10 +122,7 @@ export const authService = {
         );
       }
 
-      throw new Error(
-        (error as Error).message ??
-          "Unknown profile error",
-      );
+      throw new Error((error as Error).message ?? "Unknown profile error");
     }
   },
 };

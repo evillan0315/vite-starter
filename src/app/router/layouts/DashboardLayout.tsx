@@ -14,8 +14,6 @@ export function DashboardLayout(): JSX.Element {
 
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
-
-
         {/* Page */}
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full max-w-7xl p-6">

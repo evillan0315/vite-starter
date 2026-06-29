@@ -35,9 +35,7 @@ export function Navbar(): JSX.Element {
 
   const open = Boolean(anchorEl);
 
-  const handleMenuOpen = (
-    event: React.MouseEvent<HTMLElement>,
-  ): void => {
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -56,9 +54,7 @@ export function Navbar(): JSX.Element {
 
   const handleProfile = (): void => {
     handleMenuClose();
-    navigate(
-      `${paths.dashboard.root}/${paths.dashboard.profile}`,
-    );
+    navigate(`${paths.dashboard.root}/${paths.dashboard.profile}`);
   };
 
   const handleLogout = async (): Promise<void> => {
@@ -88,11 +84,7 @@ export function Navbar(): JSX.Element {
           minHeight: 56,
         }}
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={1}
-        >
+        <Box display="flex" alignItems="center" gap={1}>
           <Tooltip title="Menu">
             <IconButton edge="start">
               <MenuIcon />
@@ -114,11 +106,7 @@ export function Navbar(): JSX.Element {
           </Typography>
         </Box>
 
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={1}
-        >
+        <Box display="flex" alignItems="center" gap={1}>
           <ThemeToggle />
 
           {!isLoggedIn ? (
@@ -141,17 +129,13 @@ export function Navbar(): JSX.Element {
                   },
                 }}
               >
-                {user?.firstName ??
-                  user?.email ??
-                  "Authenticated User"}
+                {user?.firstName ?? user?.email ?? "Authenticated User"}
               </Typography>
 
               <Tooltip title="Account">
                 <IconButton
                   onClick={handleMenuOpen}
-                  aria-controls={
-                    open ? "account-menu" : undefined
-                  }
+                  aria-controls={open ? "account-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open}
                 >
@@ -181,26 +165,17 @@ export function Navbar(): JSX.Element {
                 }}
               >
                 <MenuItem onClick={handleDashboard}>
-                  <DashboardIcon
-                    fontSize="small"
-                    sx={{ mr: 1 }}
-                  />
+                  <DashboardIcon fontSize="small" sx={{ mr: 1 }} />
                   Dashboard
                 </MenuItem>
 
                 <MenuItem onClick={handleProfile}>
-                  <PersonIcon
-                    fontSize="small"
-                    sx={{ mr: 1 }}
-                  />
+                  <PersonIcon fontSize="small" sx={{ mr: 1 }} />
                   Profile
                 </MenuItem>
 
                 <MenuItem onClick={handleLogout}>
-                  <LogoutIcon
-                    fontSize="small"
-                    sx={{ mr: 1 }}
-                  />
+                  <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
                   Logout
                 </MenuItem>
               </Menu>

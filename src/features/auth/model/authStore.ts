@@ -2,10 +2,7 @@ import { atom } from "nanostores";
 
 import { authService } from "@/features/auth/api/authService";
 
-import type {
-  LoginCredentials,
-  UserProfile,
-} from "@/features/auth/types/auth";
+import type { LoginCredentials, UserProfile } from "@/features/auth/types/auth";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -64,10 +61,7 @@ authStore.listen(({ token }) => {
   }
 });
 
-export const setAuthDetails = (
-  token: string,
-  user: UserProfile,
-): void => {
+export const setAuthDetails = (token: string, user: UserProfile): void => {
   authStore.set({
     isLoggedIn: true,
     token,
@@ -105,8 +99,7 @@ export const loginUser = async (
       success: true,
     };
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Login failed.";
+    const message = error instanceof Error ? error.message : "Login failed.";
 
     setState({
       loading: false,
@@ -156,9 +149,7 @@ export const fetchUserProfile = async (): Promise<void> => {
       });
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : "Failed to fetch profile.";
+        error instanceof Error ? error.message : "Failed to fetch profile.";
 
       clearSession();
 

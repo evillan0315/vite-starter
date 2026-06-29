@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "@/index.css";
 
 import { bootstrap } from "@/app/bootstrap";
-import  App  from "@/app/App";
+import App from "@/app/App";
 
 await bootstrap();
 

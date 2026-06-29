@@ -11,50 +11,50 @@ graph TB
         TS["TypeScript Logic"]
         State["State Management"]
     end
-    
+
     subgraph Vite["Build & Dev Tools"]
         ViteBuild["Vite Build System"]
         HMR["Hot Module Replacement"]
         Optimization["Code Optimization"]
     end
-    
+
     subgraph Features["Core Features"]
         Auth["Authentication Module"]
         Profile["User Profile Management"]
         Backend["Backend API Integration"]
     end
-    
+
     subgraph Assets["Static Assets"]
         HTML["HTML Templates"]
         CSS["Styling & CSS"]
         Public["Public Assets"]
     end
-    
+
     subgraph External["External Services"]
         BackendAPI["Backend API Server"]
         AuthService["Authentication Service"]
     end
-    
+
     UI --> TS
     TS --> State
     State --> Features
-    
+
     UI --> Vite
     TS --> Vite
     HTML --> Vite
     CSS --> Vite
-    
+
     Features --> Auth
     Features --> Profile
     Features --> Backend
-    
+
     Auth --> AuthService
     Backend --> BackendAPI
     Profile --> BackendAPI
-    
+
     ViteBuild --> Optimization
     ViteBuild --> HMR
-    
+
     Public --> Vite
     CSS --> Assets
     HTML --> Assets
@@ -62,14 +62,14 @@ graph TB
 
 ## Technology Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Language** | TypeScript (87.7%) | Type-safe development |
-| **Framework** | React | UI component library |
-| **Build Tool** | Vite | Fast build and dev server |
-| **Styling** | CSS (1.3%) | Component styling |
-| **Markup** | HTML (4.4%) | Page templates |
-| **Scripts** | Shell (5.6%), JavaScript (1%) | Build and utility scripts |
+| Layer          | Technology                    | Purpose                   |
+| -------------- | ----------------------------- | ------------------------- |
+| **Language**   | TypeScript (87.7%)            | Type-safe development     |
+| **Framework**  | React                         | UI component library      |
+| **Build Tool** | Vite                          | Fast build and dev server |
+| **Styling**    | CSS (1.3%)                    | Component styling         |
+| **Markup**     | HTML (4.4%)                   | Page templates            |
+| **Scripts**    | Shell (5.6%), JavaScript (1%) | Build and utility scripts |
 
 ## Project Structure
 
@@ -94,22 +94,25 @@ vite-starter/
 ## Key Features
 
 ### 1. **Authentication Module**
-   - User login and registration
-   - Session management
-   - Secure token handling
-   - Integration with backend authentication service
+
+- User login and registration
+- Session management
+- Secure token handling
+- Integration with backend authentication service
 
 ### 2. **User Profile Management**
-   - View user information
-   - Update profile data
-   - User preference settings
-   - Profile picture handling
+
+- View user information
+- Update profile data
+- User preference settings
+- Profile picture handling
 
 ### 3. **Backend API Integration**
-   - Abstracted API service layer
-   - Request/response handling
-   - Error management
-   - Data serialization
+
+- Abstracted API service layer
+- Request/response handling
+- Error management
+- Data serialization
 
 ## Development Workflow
 

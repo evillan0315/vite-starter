@@ -18,12 +18,7 @@ export const useAuth = () => {
 
   const state = useStore(authStore);
 
-  const {
-    isLoggedIn,
-    token,
-    user,
-    loading,
-  } = state;
+  const { isLoggedIn, token, user, loading } = state;
 
   /**
    * Hydrate the authenticated user.
@@ -37,12 +32,9 @@ export const useAuth = () => {
   /**
    * Login
    */
-  const login = useCallback(
-    async (credentials: LoginCredentials) => {
-      return loginUser(credentials);
-    },
-    [],
-  );
+  const login = useCallback(async (credentials: LoginCredentials) => {
+    return loginUser(credentials);
+  }, []);
 
   /**
    * Logout

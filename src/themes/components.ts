@@ -68,9 +68,10 @@ export const getComponentOverrides = (
 
     styleOverrides: {
       root: {
-        backgroundColor: theme.palette.mode === "dark"
-          ? theme.palette.secondary.dark
-          : theme.palette.background.paper,
+        backgroundColor:
+          theme.palette.mode === "dark"
+            ? theme.palette.secondary.dark
+            : theme.palette.background.paper,
 
         color: theme.palette.text.primary,
 
@@ -155,10 +156,7 @@ export const getComponentOverrides = (
         "&:disabled": {
           color: "#7A705F",
 
-          background:
-            theme.palette.mode === "dark"
-              ? "#40362A"
-              : "#D7C5A9",
+          background: theme.palette.mode === "dark" ? "#40362A" : "#D7C5A9",
 
           boxShadow: "none",
         },
@@ -223,7 +221,7 @@ export const getComponentOverrides = (
       },
     },
   },
-    MuiPaper: {
+  MuiPaper: {
     defaultProps: {
       elevation: 0,
     },
@@ -392,7 +390,7 @@ export const getComponentOverrides = (
       },
     },
   },
-    MuiDivider: {
+  MuiDivider: {
     styleOverrides: {
       root: {
         borderColor: theme.palette.divider,
